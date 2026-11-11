@@ -22,7 +22,7 @@ Our primary users are incoming exchange students at unibz, from the moment they 
 | Incoming non-EU students | Primary user, highest stakes |
 | unibz International Relations Office | Key stakeholder, possible content partner |
 | Organizers of Orientation Day | Stakeholder |
-| Current and earlier exchange students, ESN and student groups | Source of knowledge, test participants |
+| Current and earlier exchange students, ESU and student groups | Source of knowledge, test participants |
 | Course teaching staff | Project stakeholder |
 | Team M2B | Builders |
 
@@ -68,7 +68,7 @@ The final shape is still open. We start with the need that has the strongest sup
 | Social platforms | [Goin'](https://www.uio.no/english/studies/international-students/before-arrival/goin/index.html) | Connections and interest groups before arrival | Mainly social, sold to universities, and unibz does not appear to use it |
 | Other university guides | [NCU OnBoard](https://portal.umk.pl/en/article/ncu-onboard-welcome-aboard), [VU Amsterdam](https://vu.nl/en/education/more-about/onboarding-international-students) | Official steps plus daily life | Cover only their own university and city |
 | unibz information | Exchange guide (PDF), web pages, Orientation Day | Local and trusted | Static or one-off, and not personal |
-| Local peers | Exchange Students unibz, ESN, buddies, WhatsApp and Telegram groups | Fast, personal, strong on events | Scattered, sometimes wrong, and lost with each group |
+| Local peers | Exchange Students unibz, ESU, buddies, WhatsApp and Telegram groups | Fast, personal, strong on events | Scattered, sometimes wrong, and lost with each group |
 | AI chatbots | General-purpose assistants | Helped one interviewed student through an Italian booking page | Accuracy on local procedures is unknown |
 
 Existing tools tend to focus on either administration or community, and we found none that is both interactive and specific to unibz and Bolzano. That is the gap we want to fill, alongside official information rather than replacing it. Paris-Saclay's desk is the closest example to study.
@@ -92,7 +92,7 @@ The MVP starts with problem areas 1 and 2 from our brainstorm, official steps th
 **Ideas to explore next:**
 
 - An interactive map with switchable layers, such as sports facilities and services, offering what Google Maps does not
-- Groups for finding people to join activities, such as different sports, adding something beyond ESN events and WhatsApp groups
+- Groups for finding people to join activities, such as different sports, adding something beyond ESU events and WhatsApp groups
 - Tips from earlier student groups, with a way to catch wrong or outdated advice
 
 **Out of scope for now:**
