@@ -1,0 +1,14 @@
+{
+  "name": "agile-m2b",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Team M2B project repository (tooling only, enforces conventional commits).",
+  "scripts": {
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "husky": "^9.1.7"
+  }
+}

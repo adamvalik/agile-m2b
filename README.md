@@ -45,3 +45,7 @@ Current solutions: the unibz exchange guide (PDF), Orientation Day and student g
 ## **Sources**
 
 * Exchange student numbers: [l'Adige, Oct 2026](https://www.ladige.it/progetti/unibz-wird-immer-internationaler-so-viele-austauschstudierende-wie-noch-nie-sgsitjmm)
+
+## **Contributing**
+
+Commits follow the Conventional Commits format. See [CONTRIBUTING.md](CONTRIBUTING.md) for the one-time setup (`npm install`).
