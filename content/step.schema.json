@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Step",
+  "description": "One step in the student checklist, with its guide. The file name without .json is the step's id: lowercase words joined by hyphens, for example tax-code.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "appliesTo",
+    "optional",
+    "startFromHome",
+    "requires",
+    "deadline",
+    "sources",
+    "lastChecked",
+    "guide"
+  ],
+  "properties": {
+    "$schema": {
+      "description": "Path to this schema, so editors get autocomplete and error highlighting. Use \"../step.schema.json\".",
+      "type": "string"
+    },
+    "title": {
+      "description": "Short, action-style title shown on the checklist, for example \"Get your tax code\".",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "appliesTo": {
+      "description": "Which students see this step.",
+      "type": "array",
+      "items": { "enum": ["eu", "non-eu"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "optional": {
+      "description": "true if the student can skip this step, like the SIM card or bank account.",
+      "type": "boolean"
+    },
+    "startFromHome": {
+      "description": "true if the student can start this step before travelling. If true, the guide needs a fromHome section; if false, it needs an afterArrival section.",
+      "type": "boolean"
+    },
+    "requires": {
+      "description": "Steps that must be done first. Use [] if none.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["step", "status"],
+        "properties": {
+          "step": {
+            "description": "Id of the required step, which is its file name without .json.",
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "status": {
+            "description": "\"confirmed\" if checked against an official source. \"unknown\" links are not shown to students as firm requirements.",
+            "enum": ["confirmed", "unknown"]
+          }
+        }
+      }
+    },
+    "deadline": {
+      "description": "The step's deadline, or null if it has none.",
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["workingDays", "countsFrom"],
+      "properties": {
+        "workingDays": {
+          "description": "Number of working days allowed.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "countsFrom": {
+          "description": "When the deadline starts counting.",
+          "enum": ["arrival", "schengen-entry"]
+        }
+      }
+    },
+    "sources": {
+      "description": "Official sources for this step. The first one is shown as the main source.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "url"],
+        "properties": {
+          "title": {
+            "description": "Name of the source page as shown to students.",
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "description": "Full https link to the source page.",
+            "type": "string",
+            "pattern": "^https://"
+          }
+        }
+      }
+    },
+    "lastChecked": {
+      "description": "Date the facts were last checked against the sources, as YYYY-MM-DD.",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "guide": {
+      "description": "The guide shown when the student opens the step. Each section is a list of short paragraphs or items in plain English.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["whatItIs", "bring", "commonMistakes", "whatComesNext"],
+      "properties": {
+        "whatItIs": {
+          "description": "What this step is and why it matters.",
+          "$ref": "#/definitions/textList"
+        },
+        "bring": {
+          "description": "Documents and things to bring, one per item. Mark an item optional if not every student needs it, and say in its text when it is needed.",
+          "$ref": "#/definitions/bringList"
+        },
+        "fromHome": {
+          "description": "How to do it before travelling. Required if startFromHome is true.",
+          "$ref": "#/definitions/textList"
+        },
+        "afterArrival": {
+          "description": "How to do it after arriving in Bolzano. Required if startFromHome is false.",
+          "$ref": "#/definitions/textList"
+        },
+        "commonMistakes": {
+          "description": "Mistakes students often make, one per item.",
+          "$ref": "#/definitions/textList"
+        },
+        "whatComesNext": {
+          "description": "What this step unlocks or what to do after it.",
+          "$ref": "#/definitions/textList"
+        }
+      }
+    }
+  },
+  "if": {
+    "properties": { "startFromHome": { "const": true } }
+  },
+  "then": {
+    "properties": { "guide": { "required": ["fromHome"] } }
+  },
+  "else": {
+    "properties": { "guide": { "required": ["afterArrival"] } }
+  },
+  "definitions": {
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "bringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "description": "What to bring. For an optional item, include when it is needed, for example \"..., if someone else applies for you\".",
+            "type": "string",
+            "minLength": 1
+          },
+          "optional": {
+            "description": "true if only some students need this item. Leave it out for items everyone must bring.",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
