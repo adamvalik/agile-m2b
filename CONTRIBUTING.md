@@ -28,7 +28,7 @@ Rules in short: lowercase type, a colon and a space, then a short description th
 
 ## One-time setup
 
-You need Node.js (version 20 or newer) installed. Then, in the repository folder, run once:
+You need Node.js 22.22.3+ or 24.15+ installed (Angular 22 requires it; the repository pins 24 in `.nvmrc`). With nvm, run `nvm install` in the repository folder. Then run once:
 
 ```bash
 npm install

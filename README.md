@@ -42,7 +42,27 @@ More in the [Product Vision](product-vision.md) and the [research](research/READ
 
 ## Run locally
 
-Coming with [#34](https://github.com/adamvalik/agile-m2b/issues/34). You will need Node.js 22.22.3+ or 24.15+ (required by Angular 22). Until then, the only setup is the commit hook: run `npm install` once (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+You need Node.js 22.22.3+ or 24.15+ (required by Angular 22). The repository pins Node.js 24 in `.nvmrc`; with [nvm](https://github.com/nvm-sh/nvm), run `nvm install` once and `nvm use` in each new terminal.
+
+```bash
+npm install      # once, and after pulling dependency changes; also activates the commit hook
+npm start        # dev server at http://localhost:4200, reloads on save
+npm test         # unit tests (Vitest)
+npm run build    # production build in dist/agile-m2b/browser
+```
+
+Where code goes:
+
+| Folder | What lives there | 
+| --- | --- | 
+| `src/app/` | Angular components and pages (UI) | 
+| `src/core/` | Checklist logic, answers and progress in `localStorage` | 
+| `content/` | Step files and their schema | 
+| `scripts/` | Content check and build step | 
+
+## Deployment
+
+The [`app` workflow](.github/workflows/app.yml) runs the unit tests and the build on every pull request and every push to `main`. If they pass, it deploys with the Vercel CLI: a pull request gets a preview link (in the workflow summary and the PR's "Deployments"), and a merge to `main` updates the live app. Vercel's own Git integration is switched off in [vercel.json](vercel.json), so deploys never depend on who wrote the commit.
 
 ## Edit a step
 
@@ -64,6 +84,7 @@ We work in Scrum with three two-week sprints.
 - **Changes:** every change goes through a pull request reviewed by another team member. Commit messages follow Conventional Commits, checked locally and in CI; see [CONTRIBUTING.md](CONTRIBUTING.md).
 - **Testing:** we can test only with students who are already in Bolzano, so value before arrival is checked indirectly.
 - **Coordination:** a WhatsApp group for quick questions, GitHub for everything that should last.
+- **Meetings:** decisions and next steps from every team meeting go into the [meeting log](sprints/meeting-log.md).
 
 ## Team
 
@@ -78,10 +99,13 @@ We work in Scrum with three two-week sprints.
 
 | Path | What it holds |
 | --- | --- |
+| [src/](src/) | The Angular app (`src/app/`) and plain TypeScript logic (`src/core/`) |
+| [scripts/](scripts/) | Build-time scripts, such as the step content check |
+| [public/](public/) | Static files served as they are (favicon) |
 | [project-context.md](project-context.md) | Team project context (Deliverable 1) |
 | [product-vision.md](product-vision.md) | Product Vision (Deliverable 2) |
 | [deliverables/](deliverables/) | PDF versions of submitted deliverables |
 | [research/](research/) | Desk research, online coding sheet, competitor research, anonymised interview notes |
-| [sprints/](sprints/) | Sprint plans, and later reviews and retrospectives |
+| [sprints/](sprints/) | Sprint plans, the [meeting log](sprints/meeting-log.md), and later reviews and retrospectives |
 | [definition-of-done.md](definition-of-done.md) | Team Definition of Done and its change log |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Commit format and one-time setup |
