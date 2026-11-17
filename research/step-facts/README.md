@@ -46,7 +46,7 @@ These are needed but are not separate checklist steps, so they belong in each gu
 |---|---|---|---|---|
 | `tax-code` | passport or ID card | all | **confirmed** | tax-code.md [1][2] |
 | `tax-code` | passport with visa (if required), plus proof of the right to stay | non-EU | **confirmed** | tax-code.md [1] |
-| `residence-permit` | study visa, unibz enrolment certificate, health insurance stamped by the embassy, proof of accommodation | non-EU | **confirmed** | residence-permit.md [1][3] |
+| `residence-permit` | study visa, unibz enrolment certificate, health insurance stamped by the embassy, proof of accommodation with the host's ID, proof of means of support | non-EU | **confirmed** | residence-permit.md [1][3][7] |
 | `transport-pass` | ID card or passport (copy for the Flex Pass) | all | **confirmed** for the Flex Pass; team experience for the U26 Pass | transport-pass.md [6] |
 | `bank-account` | passport, enrolment certificate or self-declaration | all | **confirmed** | tax-code.md [14] |
 | `sim-card` | identity document | all | **confirmed** | sim-card.md [2] |
@@ -85,7 +85,7 @@ Only **confirmed** links set the order. Unknown links are not shown to students 
 - **Links that apply to non-EU students only** (row 3) can be written in `requires` without extra fields: `residence-permit` only applies to non-EU students, so for EU students the app should ignore a `requires` entry that points to a step not on their checklist. #51 needs to handle this.
 - **Corrected links** (rows 5, 7, 9) are left out of `requires`.
 - **Unknown links** (rows 4, 6, 8, 10, 11) go in with `"status": "unknown"`, so they can be confirmed later without changing code.
-- **Residence permit deadline:** 8 working days. The sources disagree on the start, entry into Italy or into the Schengen area (residence-permit.md). Use `"countsFrom": "schengen-entry"`, the stricter reading, until the Questura confirms.
+- **Residence permit deadline:** 8 working days from entry into Italy, by law (residence-permit.md [9]). Use `"countsFrom": "arrival"`. Only the unibz guide counts from the Schengen area, so the guide text should still advise applying in the first days.
 
 Suggested `requires` per step:
 
