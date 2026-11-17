@@ -8,10 +8,14 @@
   },
   "scripts": {
     "ng": "ng",
+    "prestart": "npm run check:content",
     "start": "ng serve",
+    "prebuild": "npm run check:content",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "check:content": "node scripts/check-content.mjs",
+    "test:scripts": "node --test scripts/*.test.mjs",
     "prepare": "husky"
   },
   "dependencies": {
@@ -30,6 +34,7 @@
     "@angular/compiler-cli": "^22.2.0",
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
+    "ajv": "^8.20.0",
     "husky": "^9.1.7",
     "jsdom": "^30.0.0",
     "prettier": "^3.8.1",

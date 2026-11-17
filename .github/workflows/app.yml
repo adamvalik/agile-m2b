@@ -1,7 +1,7 @@
 name: app
 
-# Every pull request: run tests and build, then deploy a preview to Vercel.
-# Every push to main (a merged PR): run tests and build, then deploy to production.
+# Every pull request: check the step content files, run tests and build, then deploy a preview to Vercel.
+# Every push to main (a merged PR): the same checks, then deploy to production.
 # Deploys go through the Vercel CLI, not Vercel's Git integration, so a teammate's
 # merge is never blocked by the Hobby plan's commit-author check.
 
@@ -24,6 +24,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Step content check
+        run: npm run check:content
+      - name: Content check tests
+        run: npm run test:scripts
       - name: Unit tests
         run: npm test -- --watch=false
       - name: Build
