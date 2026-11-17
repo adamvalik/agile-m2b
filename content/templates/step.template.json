@@ -1,0 +1,51 @@
+{
+  "$schema": "../step.schema.json",
+  "title": "<Short action-style title, for example: Get your transport pass>",
+  "appliesTo": ["eu", "non-eu"],
+  "optional": false,
+  "startFromHome": true,
+  "requires": [
+    { "step": "id-of-required-step", "status": "confirmed" },
+    { "step": "id-of-possibly-required-step", "status": "unknown" }
+  ],
+  "deadline": {
+    "workingDays": 1,
+    "countsFrom": "arrival"
+  },
+  "sources": [
+    {
+      "title": "<Name of the main official source page>",
+      "url": "https://<link to the main official source page>"
+    },
+    {
+      "title": "<Name of another official source page, if any>",
+      "url": "https://<link to another official source page>"
+    }
+  ],
+  "lastChecked": "2000-01-01",
+  "guide": {
+    "whatItIs": [
+      "<What this step is, in one or two sentences.>",
+      "<Why it matters or which steps wait for it.>"
+    ],
+    "bring": [
+      { "text": "<Something every student must bring>" },
+      {
+        "text": "<Something only some students need>, if <when it is needed>",
+        "optional": true
+      }
+    ],
+    "fromHome": [
+      "<How to do this before travelling.>"
+    ],
+    "afterArrival": [
+      "<How to do this after arriving in Bolzano.>"
+    ],
+    "commonMistakes": [
+      "<A mistake students often make, and how to avoid it.>"
+    ],
+    "whatComesNext": [
+      "<What this step unlocks, or what to do next.>"
+    ]
+  }
+}
