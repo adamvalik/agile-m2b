@@ -20,6 +20,7 @@ Adam (lead, PM), Laurel (backend, QA), Tom (UI/UX), Richard (backend). Coordinat
 - `research/`: desk research, online coding sheet, competitor research, interview notes P1 to P5 (anonymised)
 - `deliverable3-task.md`: current assignment, Sprint 1 (planning, task board, first increment, review, retro, report)
 - `sprints/sprint-1-plan.md`: Sprint Goal, Sprint Backlog (19 points), task breakdown and owners
+- `sprints/meeting-log.md`: notes from every team meeting (attendees, decisions, next steps), newest first
 - `definition-of-done.md`: team Definition of Done, with a change log updated at retrospectives
 
 - `src/app/`: Angular 22 app (UI), `src/core/`: plain TypeScript logic, `scripts/`: build-time scripts, `content/`: step files
