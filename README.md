@@ -84,6 +84,7 @@ We work in Scrum with three two-week sprints.
 - **Changes:** every change goes through a pull request reviewed by another team member. Commit messages follow Conventional Commits, checked locally and in CI; see [CONTRIBUTING.md](CONTRIBUTING.md).
 - **Testing:** we can test only with students who are already in Bolzano, so value before arrival is checked indirectly.
 - **Coordination:** a WhatsApp group for quick questions, GitHub for everything that should last.
+- **Meetings:** decisions and next steps from every team meeting go into the [meeting log](sprints/meeting-log.md).
 
 ## Team
 
@@ -105,6 +106,6 @@ We work in Scrum with three two-week sprints.
 | [product-vision.md](product-vision.md) | Product Vision (Deliverable 2) |
 | [deliverables/](deliverables/) | PDF versions of submitted deliverables |
 | [research/](research/) | Desk research, online coding sheet, competitor research, anonymised interview notes |
-| [sprints/](sprints/) | Sprint plans, and later reviews and retrospectives |
+| [sprints/](sprints/) | Sprint plans, the [meeting log](sprints/meeting-log.md), and later reviews and retrospectives |
 | [definition-of-done.md](definition-of-done.md) | Team Definition of Done and its change log |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Commit format and one-time setup |
