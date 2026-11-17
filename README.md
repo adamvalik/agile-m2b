@@ -4,6 +4,8 @@ A web app that gives incoming exchange students at unibz one clear, ordered over
 
 Team M2B's project for the Agile Processes course at the Free University of Bozen-Bolzano (unibz), autumn 2026.
 
+**Live app:** [m2b-agile.vercel.app](https://m2b-agile.vercel.app/) (public, no login; updated on every merge to `main`)
+
 ## Why
 
 unibz welcomed a record 196 incoming exchange students this winter semester ([l'Adige, Oct 2026](https://www.ladige.it/progetti/unibz-wird-immer-internationaler-so-viele-austauschstudierende-wie-noch-nie-sgsitjmm)). In their first weeks they face official steps that depend on each other: tax code (codice fiscale), transport pass, SIM card, bank account and, for non-EU students, the residence permit. The information exists, but it is spread across websites, offices, a PDF guide and chat groups, often only in Italian or German, and much of it arrives too late. Students who arranged the tax code from home had no delay; those who found out on arrival waited up to two weeks.
@@ -62,7 +64,7 @@ Where code goes:
 
 ## Deployment
 
-The [`app` workflow](.github/workflows/app.yml) runs the unit tests and the build on every pull request and every push to `main`. If they pass, it deploys with the Vercel CLI: a pull request gets a preview link (in the workflow summary and the PR's "Deployments"), and a merge to `main` updates the live app. Vercel's own Git integration is switched off in [vercel.json](vercel.json), so deploys never depend on who wrote the commit.
+The [`app` workflow](.github/workflows/app.yml) runs the unit tests and the build on every pull request and every push to `main`. If they pass, it deploys with the Vercel CLI: a pull request gets a preview link (in the workflow summary and the PR's "Deployments"), and a merge to `main` updates the live app at [m2b-agile.vercel.app](https://m2b-agile.vercel.app/). Vercel's own Git integration is switched off in [vercel.json](vercel.json), so deploys never depend on who wrote the commit.
 
 ## Edit a step
 
