@@ -32,6 +32,7 @@ Stack: Angular 22 + TypeScript (standalone, zoneless, Vitest), hosted on Vercel.
 
 - `src/core/` never imports from `@angular/*`; it holds pure, unit-tested functions (checklist building, storage). Components in `src/app/` call into it.
 - Pages live in `src/app/pages/<name>/` and are lazy-loaded from `app.routes.ts`.
+- Components use separate files: `<name>.component.ts`, `.html`, `.css` and `.spec.ts` (no inline templates or styles).
 - Answers and progress are stored only in `localStorage`; never send data to a server or ask for names, documents, passport numbers or tax codes.
 - Every logic change in `src/core/` comes with a `*.spec.ts` test; run `npm test` and `npm run build` before opening a PR.
 - Follow the Angular conventions below.
