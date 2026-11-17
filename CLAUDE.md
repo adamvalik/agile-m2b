@@ -14,14 +14,15 @@ Adam (lead, PM), Laurel (backend, QA), Tom (UI/UX), Richard (backend). Coordinat
 
 ## Repo layout
 
-- `README.md`: team project context (Deliverable 1)
+- `README.md`: project front page (product, stack, how we work, repo layout)
+- `project-context.md`: team project context (Deliverable 1)
 - `product-vision.md`: Product Vision (Deliverable 2); PDFs of both in `deliverables/`
 - `research/`: desk research, online coding sheet, competitor research, interview notes P1 to P5 (anonymised)
 - `deliverable3-task.md`: current assignment, Sprint 1 (planning, task board, first increment, review, retro, report)
 - `sprints/sprint-1-plan.md`: Sprint Goal, Sprint Backlog (19 points), task breakdown and owners
 - `definition-of-done.md`: team Definition of Done, with a change log updated at retrospectives
 
-No application code yet; the stack is not decided.
+No application code yet. Stack: Angular + TypeScript, hosted on Vercel.
 
 ## Backlog and sprints
 

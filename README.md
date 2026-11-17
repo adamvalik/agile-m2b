@@ -1,51 +1,87 @@
-# **Team Project Context**
+# M2B: first weeks in Bolzano
 
-Team **M2B**:
+A web app that gives incoming exchange students at unibz one clear, ordered overview of their first weeks in Bolzano.
+
+Team M2B's project for the Agile Processes course at the Free University of Bozen-Bolzano (unibz), autumn 2026.
+
+## Why
+
+unibz welcomed a record 196 incoming exchange students this winter semester ([l'Adige, Oct 2026](https://www.ladige.it/progetti/unibz-wird-immer-internationaler-so-viele-austauschstudierende-wie-noch-nie-sgsitjmm)). In their first weeks they face official steps that depend on each other: tax code (codice fiscale), transport pass, SIM card, bank account and, for non-EU students, the residence permit. The information exists, but it is spread across websites, offices, a PDF guide and chat groups, often only in Italian or German, and much of it arrives too late. Students who arranged the tax code from home had no delay; those who found out on arrival waited up to two weeks.
+
+More in the [Product Vision](product-vision.md) and the [research](research/README.md).
+
+## What we are building
+
+**First release (MVP):**
+
+- A short intake: EU or non-EU, and arrival date. No account, no name, no documents.
+- A personal checklist of the official steps, in the right order, that adapts to those answers.
+- A short step-by-step guide for each step, with its official source and the date we last checked it.
+- A clear sign of what can start from home, what has a deadline and what waits on another step.
+- Marking steps as done, saved only on the student's own device.
+
+**Principles we keep:**
+
+| Principle | What it means in practice |
+| --- | --- |
+| No account, no personal data | The app asks only for EU or non-EU status and arrival date |
+| Progress stays on the device | Answers and done marks are stored in the browser, never sent anywhere |
+| Correct information first | Every step shows its official source and a last-checked date; anything unconfirmed is marked unknown |
+| Content without code | Each step is an editable content file, so the information can stay current after our course ends |
+| Alongside official sources | We point students to official pages and offices; we do not replace them or act on their behalf |
+
+## Tech stack
+
+| Part | Choice |
+| --- | --- |
+| Framework | [Angular](https://angular.dev/) with TypeScript, a single-page app |
+| App logic | Plain TypeScript in `src/core/`, data in `localStorage` | 
+| Step content | Editable files in `content/steps/`, checked and turned into JSON at build time |
+| Hosting | [Vercel](https://vercel.com/) | 
+| Later backend | A small TypeScript API, for example on [Render](https://render.com/) | 
+
+## Run locally
+
+Coming with [#34](https://github.com/adamvalik/agile-m2b/issues/34). You will need Node.js 22.22.3+ or 24.15+ (required by Angular 22). Until then, the only setup is the commit hook: run `npm install` once (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+
+## Edit a step
+
+Coming with [#46](https://github.com/adamvalik/agile-m2b/issues/46), once the step file format ([#43](https://github.com/adamvalik/agile-m2b/issues/43)) is in place.
+
+## How we work
+
+We work in Scrum with three two-week sprints.
+
+| Sprint | Dates | Goal |
+| --- | --- | --- |
+| 1 | 11 to 25 November | Public app with intake and a personal, ordered checklist built from checked facts ([plan](sprints/sprint-1-plan.md)) |
+| 2 | 26 November to 9 December | Planned at Sprint 2 Planning |
+| 3 | 10 to 23 December | Planned at Sprint 3 Planning |
+
+- **Backlog and task board:** [M2B Agile Processes](https://github.com/users/adamvalik/projects/1) on GitHub Projects. Stories and tasks are issues in this repository, with priority (P0 to P2) and estimates in story points on stories.
+- **Workflow:** Product Backlog → Sprint Backlog → In progress → In review → Done.
+- **Definition of Done:** [definition-of-done.md](definition-of-done.md), reviewed at every retrospective.
+- **Changes:** every change goes through a pull request reviewed by another team member. Commit messages follow Conventional Commits, checked locally and in CI; see [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Testing:** we can test only with students who are already in Bolzano, so value before arrival is checked indirectly.
+- **Coordination:** a WhatsApp group for quick questions, GitHub for everything that should last.
+
+## Team
 
 | Member | Role |
-| :---- | :---- |
-| Adam | Team leader, PM, anything that is needed. |
-| Laurel | Backend and QA |
+| --- | --- |
+| Adam | Team lead, PM, anything that is needed |
+| Laurel | Backend, QA |
 | Tom | UI/UX |
 | Richard | Backend |
 
-Communication channel: a WhatsApp group for quick coordination, Git and Github for version control plus Github Projects for project management.
+## Repository layout
 
-Administrative contact: [avalik@unibz.it](mailto:avalik@unibz.it)
-
-**Quick team check**
-
-Between us we cover a full product cycle. 
-
-Capabilities to develop are presentation skills, planning and estimation. 
-
-What we can learn from each other is mostly design practice from Tom, backend knowledge from Laurel and Richard and management from Adam.
-
-If one person were unavailable, we would still be able to progress. We will share progress and knowledge, so everything lives on the shared board with an owner and a status with at least one other person who knows it. 
-
-## **Problem areas we brainstormed**
-
-We focused on problems unibz students meet around their studies, especially students arriving from abroad. unibz welcomed a record 196 incoming exchange students from 25 countries this winter semester and hosts about 300 a year.
-
-| \# | Problem area |
-| :---- | :---- |
-| 1 | **Official steps that depend on each other**: tax code (codice fiscale), SIM card, bank account, transport pass and, for non-EU students, the residence permit. |
-| 2 | **Information that arrives too late**: what students could have done from home but learn about only in Bolzano. |
-| 3 | **Settling into daily life**: finding shops, health care and services in a bilingual city. |
-| 4 | **Practical knowledge lost between groups**: advice lives in WhatsApp and Telegram groups and leaves with each group. |
-
-## **Provisional project direction**
-
-**A web app that gives incoming students at unibz one clear, ordered overview for their first weeks in Bolzano.**
-
-From areas 1 and 2, a checklist that adapts to the student's situation (EU or non-EU, arrival date), with a short step-by-step guide for each official task. Areas 3 and 4 as later candidates, for example a map of useful places or tips from earlier groups.
-
-Current solutions: the unibz exchange guide (PDF), Orientation Day and student groups.
-
-## **Sources**
-
-* Exchange student numbers: [l'Adige, Oct 2026](https://www.ladige.it/progetti/unibz-wird-immer-internationaler-so-viele-austauschstudierende-wie-noch-nie-sgsitjmm)
-
-## **Contributing**
-
-Commits follow the Conventional Commits format. See [CONTRIBUTING.md](CONTRIBUTING.md) for the one-time setup (`npm install`).
+| Path | What it holds |
+| --- | --- |
+| [project-context.md](project-context.md) | Team project context (Deliverable 1) |
+| [product-vision.md](product-vision.md) | Product Vision (Deliverable 2) |
+| [deliverables/](deliverables/) | PDF versions of submitted deliverables |
+| [research/](research/) | Desk research, online coding sheet, competitor research, anonymised interview notes |
+| [sprints/](sprints/) | Sprint plans, and later reviews and retrospectives |
+| [definition-of-done.md](definition-of-done.md) | Team Definition of Done and its change log |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Commit format and one-time setup |
