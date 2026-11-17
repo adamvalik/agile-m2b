@@ -6,7 +6,7 @@
 | Issue | #39 (part of #2) |
 | Last checked | 2026-11-17 |
 | Researched by | Richard |
-| Reviewed by | _pending (Laurel, see #42)_ |
+| Reviewed by | Laurel (2026-11-17, #42) |
 
 ## Summary for the guide
 
