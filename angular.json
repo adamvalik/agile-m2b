@@ -8,7 +8,14 @@
   "projects": {
     "agile-m2b": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "type": "component",
+          "style": "css",
+          "inlineTemplate": false,
+          "inlineStyle": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

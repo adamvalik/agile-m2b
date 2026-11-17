@@ -33,7 +33,8 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use `model()` for two-way bound properties with `[(prop)]` syntax instead of pairing `input()` with `output()`
 - Use `computed()` for derived state
 - Use `linkedSignal()` for state derived from multiple reactive sources that must stay synchronized
-- Prefer inline templates for small components
+- Put each component in its own files: `<name>.component.ts`, `<name>.component.html` and `<name>.component.css`, linked with `templateUrl` and `styleUrl`. Do NOT use inline `template` or `styles`, even for small components
+- Name the spec next to it `<name>.component.spec.ts`. `ng generate component` already creates this layout (set in `angular.json`)
 - Prefer Signal Forms (`@angular/forms/signals`) for new forms. They are stable in Angular v22+ and provide signal-based state, type-safe field access, and schema-based validation
 - When not using Signal Forms, prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead

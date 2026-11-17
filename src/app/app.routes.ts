@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: '',
     title: 'First weeks in Bolzano',
-    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+    loadComponent: () => import('./pages/home/home.component').then((m) => m.Home),
   },
   { path: '**', redirectTo: '' },
 ];

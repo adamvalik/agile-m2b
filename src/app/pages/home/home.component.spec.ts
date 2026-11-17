@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Home } from './home';
+import { Home } from './home.component';
 
 describe('Home', () => {
   it('explains in one sentence what the app is for', async () => {
