@@ -67,7 +67,7 @@ These are needed but are not separate checklist steps, so they belong in each gu
 
 ## What this means for the checklist order (#51)
 
-Only **confirmed** links set the order. Unknown links are not shown to students as firm requirements (as the step schema says).
+Only **confirmed** links set the order. Unknown links are shown to students as hints at most, never as firm requirements (as the step schema says), and **#51 must never use them for ordering**.
 
 **EU students**
 
@@ -84,13 +84,19 @@ Only **confirmed** links set the order. Unknown links are not shown to students 
 4. `bank-account`, optional (needs the tax code and the permit application, since the receipt is accepted)
 5. `sim-card`, optional
 
-For students of 26 or older the U26 Pass is not available; the guide points them to the Fix365, Flex or Euregio Ticket Students instead (transport-pass.md). This changes the guide text, not the order.
+For students of 26 or older the U26 Pass is not available, and the options differ (transport-pass.md [6][8][10]):
+
+- **EU students:** Fix365, Flex Pass or Euregio Ticket Students (under 28).
+- **Non-EU students:** the Fix365 is for EU or Swiss residents or people who **work** in South Tyrol; studying does not count, so it runs into the same residence question as row 6. The options open to them are the Flex Pass ("work or study in South Tyrol") and the Euregio Ticket Students (under 28, enrolled at a Euregio university, no residence rule).
+
+This changes the guide text, not the order.
 
 ## Notes for the step files (#50)
 
 - **Links that apply to non-EU students only** (row 3) can be written in `requires` without extra fields: `residence-permit` only applies to non-EU students, so for EU students the app should ignore a `requires` entry that points to a step not on their checklist. #51 needs to handle this.
 - **Corrected links** (rows 5, 7, 9) are left out of `requires`.
-- **Unknown links** (rows 4, 6, 8, 10, 11, 12) go in with `"status": "unknown"`, so they can be confirmed later without changing code.
+- **Unknown links** (rows 4, 6, 8, 10, 11) go in with `"status": "unknown"`, so they can be confirmed later without changing code. They are hints only: the checklist order (#51) uses confirmed links alone.
+- **No loops, not even through unknown links.** Rows 10 and 12 point in opposite directions (the bank account might need a SIM card, the SIM card might need a bank account). Both are unknown, but writing both would make a loop, and the content check (#45) rejects any loop in `requires`. Only row 10 goes into the step files: a bank asking for an Italian phone number (for example for security codes) is the more likely of the two. Row 12 stays in the table as an open question and is added to `requires` only if a source confirms it and row 10 turns out wrong.
 - **Residence permit deadline:** 8 working days from entry into Italy, by law (residence-permit.md [9]). Use `"countsFrom": "arrival"`. Only the unibz guide counts from the Schengen area, so the guide text should still advise applying in the first days.
 
 Suggested `requires` per step:
@@ -101,7 +107,9 @@ Suggested `requires` per step:
 | `residence-permit` | none |
 | `transport-pass` | `tax-code` (confirmed), `residence-permit` (unknown), `sim-card` (unknown) |
 | `bank-account` | `tax-code` (confirmed), `residence-permit` (confirmed), `sim-card` (unknown) |
-| `sim-card` | `tax-code` (unknown), `bank-account` (unknown) |
+| `sim-card` | `tax-code` (unknown) |
+
+These links contain no loop.
 
 The schema file is [content/step.schema.json](../../content/step.schema.json).
 
