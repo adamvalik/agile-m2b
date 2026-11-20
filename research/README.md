@@ -10,4 +10,5 @@ Evidence behind the Product Vision. Collected in autumn 2026 for a related cours
 | [online-research-guide.md](online-research-guide.md) | Method and codes for the coding sheet |
 | [interviews/](interviews/) | Notes from 5 student interviews (P1 to P5), with names and identifying details removed |
 | [competitor-research.md](competitor-research.md), [competitor-research-2.md](competitor-research-2.md) | Existing solutions |
+| [step-facts/](step-facts/) | Checked facts for the five official steps (#2), with sources and last-checked dates, and the dependency table between the steps (#41) |
 
