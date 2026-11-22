@@ -11,9 +11,9 @@ import { RouterOutlet } from '@angular/router';
   `,
   styles: `
     .page {
-      max-width: 40rem;
+      max-width: 42.5rem;
       margin: 0 auto;
-      padding: 1.5rem 1rem 3rem;
+      padding: 1.5rem 1.25rem 3rem;
     }
   `,
 })

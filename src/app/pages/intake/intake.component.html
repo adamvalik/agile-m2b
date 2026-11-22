@@ -1,0 +1,85 @@
+<a hlmBtn variant="ghost" size="sm" routerLink="/" class="-ms-2.5">
+  <ng-icon name="lucideChevronLeft" aria-hidden="true" />
+  Back
+</a>
+
+<h1 class="mt-6 text-2xl font-semibold tracking-tight sm:text-3xl">Two quick questions</h1>
+<p class="mt-1 text-sm text-muted-foreground">So we show only the steps that apply to you.</p>
+
+@if (showSummary()) {
+  <div hlmAlert variant="destructive" class="mt-6" tabindex="-1" #summary>
+    <ng-icon name="lucideCircleAlert" aria-hidden="true" />
+    <h2 hlmAlertTitle>{{ messages.summary }}</h2>
+  </div>
+}
+
+@if (showSaved()) {
+  <div hlmAlert class="mt-6">
+    <ng-icon name="lucideCircleCheck" aria-hidden="true" />
+    <h2 hlmAlertTitle>Answers saved.</h2>
+    <p hlmAlertDescription>Your checklist is coming soon.</p>
+  </div>
+}
+
+@if (saveFailed()) {
+  <div hlmAlert variant="destructive" class="mt-6">
+    <ng-icon name="lucideCircleAlert" aria-hidden="true" />
+    <h2 hlmAlertTitle>We could not save your answers on this device.</h2>
+    <p hlmAlertDescription>Check that your browser allows this site to store data.</p>
+  </div>
+}
+
+<form [formRoot]="intake" novalidate class="intake-card mt-6">
+  <div class="intake-card__body grid gap-8">
+    <fieldset hlmFieldSet>
+      <legend hlmFieldLegend class="text-base">Are you an EU citizen?</legend>
+      <p hlmFieldDescription class="-mt-2">
+        Non-EU students need a residence permit, so they get extra steps.
+      </p>
+      <div hlmField>
+        <hlm-radio-group [formField]="intake.status" class="gap-3">
+          <div class="flex items-center gap-3">
+            <hlm-radio value="eu" inputId="status-eu">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="status-eu" class="font-normal">Yes, EU citizen</label>
+          </div>
+          <div class="flex items-center gap-3">
+            <hlm-radio value="non-eu" inputId="status-non-eu">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="status-non-eu" class="font-normal">No, non-EU citizen</label>
+          </div>
+        </hlm-radio-group>
+        <hlm-field-error>{{ firstError(intake.status().errors()) }}</hlm-field-error>
+      </div>
+    </fieldset>
+
+    <div hlmField>
+      <label hlmFieldLabel for="arrival-date">When do you arrive in Bolzano?</label>
+      <hlm-date-picker
+        [formField]="intake.arrivalDate"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        captionLayout="dropdown"
+        align="start"
+      >
+        <hlm-date-picker-trigger buttonId="arrival-date" class="w-full">
+          Pick a date
+        </hlm-date-picker-trigger>
+      </hlm-date-picker>
+      <p hlmFieldDescription>
+        Some deadlines count from this day. If you enter Italy earlier, use that date. Already here?
+        Enter the day you arrived.
+      </p>
+      <hlm-field-error>{{ firstError(intake.arrivalDate().errors()) }}</hlm-field-error>
+    </div>
+  </div>
+
+  <div class="intake-card__footer grid gap-4">
+    <button hlmBtn type="submit" class="w-full">Show my checklist</button>
+    <p class="text-center text-sm text-muted-foreground">
+      We never ask for your name, documents, passport or tax code.
+    </p>
+  </div>
+</form>

@@ -1,0 +1,29 @@
+/* Phone: questions and button run down the page. Wider screens: a 560 px card, as in Figma. */
+:host {
+  display: block;
+  max-width: 35rem;
+  margin-inline: auto;
+}
+
+.intake-card__footer {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 40rem) {
+  .intake-card {
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) + 4px);
+    overflow: hidden;
+  }
+
+  .intake-card__body {
+    padding: 1.25rem 1rem;
+  }
+
+  .intake-card__footer {
+    margin-top: 0;
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    background: color-mix(in oklch, var(--muted) 50%, transparent);
+  }
+}
