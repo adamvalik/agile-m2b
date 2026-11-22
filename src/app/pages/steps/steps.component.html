@@ -1,0 +1,42 @@
+<h1>All steps</h1>
+<p class="lead">
+  Every step as it is written in the content files. The personal checklist picks the ones that apply
+  to you.
+</p>
+
+@if (steps.length === 0) {
+  <p class="note">No steps yet.</p>
+} @else {
+  <ul class="steps">
+    @for (step of steps; track step.id) {
+      <li class="step">
+        <h2>{{ step.title }}</h2>
+        <dl>
+          <dt>For</dt>
+          <dd>
+            @if (step.appliesTo.length === 2) {
+              EU and non-EU students
+            } @else if (step.appliesTo[0] === 'eu') {
+              EU students
+            } @else {
+              Non-EU students
+            }
+            @if (step.optional) {
+              (optional)
+            }
+          </dd>
+          <dt>Source</dt>
+          <dd>
+            <a [href]="mainSource(step).url" target="_blank" rel="noopener">{{
+              mainSource(step).title
+            }}</a>
+          </dd>
+          <dt>Last checked</dt>
+          <dd>
+            <time [attr.datetime]="step.lastChecked">{{ step.lastChecked }}</time>
+          </dd>
+        </dl>
+      </li>
+    }
+  </ul>
+}
