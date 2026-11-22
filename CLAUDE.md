@@ -24,6 +24,7 @@ Adam (lead, PM), Laurel (backend, QA), Tom (UI/UX), Richard (backend). Coordinat
 - `definition-of-done.md`: team Definition of Done, with a change log updated at retrospectives
 
 - `src/app/`: Angular 22 app (UI), `src/core/`: plain TypeScript logic, `scripts/`: build-time scripts, `content/`: step files
+- `libs/ui/`: spartan/ui components (imported as `@spartan-ng/helm/<name>`); `design/`: link to the Figma file and exported screens
 - `docs/angular-best-practices.md`: Angular conventions
 
 Stack: Angular 22 + TypeScript (standalone, zoneless, Vitest), hosted on Vercel. Node.js 24 via `.nvmrc`. Commands: `npm start`, `npm test`, `npm run build`.
@@ -33,6 +34,7 @@ Stack: Angular 22 + TypeScript (standalone, zoneless, Vitest), hosted on Vercel.
 - `src/core/` never imports from `@angular/*`; it holds pure, unit-tested functions (checklist building, storage). Components in `src/app/` call into it.
 - Pages live in `src/app/pages/<name>/` and are lazy-loaded from `app.routes.ts`.
 - Components use separate files: `<name>.component.ts`, `.html`, `.css` and `.spec.ts` (no inline templates or styles).
+- Build UI from the spartan/ui components in `libs/ui/` and Tailwind utility classes, following the Figma screens in `design/`. Theme colours are CSS variables in `src/styles.css`.
 - Answers and progress are stored only in `localStorage`; never send data to a server or ask for names, documents, passport numbers or tax codes.
 - Every logic change in `src/core/` comes with a `*.spec.ts` test; run `npm test` and `npm run build` before opening a PR.
 - Follow the Angular conventions below.
