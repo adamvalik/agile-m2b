@@ -142,10 +142,10 @@
     "properties": { "startFromHome": { "const": true } }
   },
   "then": {
-    "properties": { "guide": { "required": ["fromHome"] } }
+    "properties": { "guide": { "type": "object", "required": ["fromHome"] } }
   },
   "else": {
-    "properties": { "guide": { "required": ["afterArrival"] } }
+    "properties": { "guide": { "type": "object", "required": ["afterArrival"] } }
   },
   "definitions": {
     "textList": {

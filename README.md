@@ -48,9 +48,11 @@ You need Node.js 22.22.3+ or 24.15+ (required by Angular 22). The repository pin
 
 ```bash
 npm install      # once, and after pulling dependency changes; also activates the commit hook
-npm start        # dev server at http://localhost:4200, reloads on save
-npm test         # unit tests (Vitest)
-npm run build    # production build in dist/agile-m2b/browser
+npm start              # dev server at http://localhost:4200, reloads on save
+npm test               # unit tests (Vitest)
+npm run build          # production build in dist/agile-m2b/browser
+npm run check:content  # check the step files in content/steps (also runs before start and build)
+npm run test:scripts   # tests for the content check
 ```
 
 Where code goes:
