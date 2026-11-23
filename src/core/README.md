@@ -6,7 +6,7 @@ Planned contents (Sprint 1):
 
 | Module | What it does | Task |
 | --- | --- | --- |
-| Step types and loading | Typed steps read from the generated step data | #44 |
+| Step types and loading | `step.ts`: the `Step` type. `steps.ts`: `loadSteps()`, `findStep()`, `mainSource()` over the data that `scripts/build-steps.mjs` generates into `steps.generated.ts` (not committed) | #44 |
 | Checklist builder | `buildChecklist(steps, answers)`: filters and orders steps for the student | #51 |
 | Answers and progress | Reads and writes answers and done marks in `localStorage` | #53 |
 
