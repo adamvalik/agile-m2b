@@ -1,0 +1,54 @@
+{
+  "$schema": "../step.schema.json",
+  "title": "Get an Italian SIM card",
+  "appliesTo": ["eu", "non-eu"],
+  "optional": true,
+  "startFromHome": false,
+  "requires": [{ "step": "tax-code", "status": "unknown" }],
+  "deadline": null,
+  "sources": [
+    {
+      "title": "Your Europe (EU): Roaming, using a mobile phone in the EU",
+      "url": "https://europa.eu/youreurope/citizens/consumers/internet-telecoms/mobile-roaming-costs/faq/index_en.htm"
+    },
+    {
+      "title": "Italian Electronic Communications Code, art. 98-undetricies: identifying users (Italian)",
+      "url": "https://miolegale.it/codici/codice-comunicazioni-elettroniche/art-98-undetricies/"
+    }
+  ],
+  "lastChecked": "2026-11-17",
+  "guide": {
+    "whatItIs": [
+      "Optional. EU students can keep their home SIM at home prices, but on a long stay the operator may start charging extra. For a long stay, the EU suggests a local SIM.",
+      "With a SIM from outside the EU, roaming costs depend on your home operator."
+    ],
+    "bring": [
+      {
+        "text": "A passport or ID card; the shop keeps a copy. Non-EU citizens can use a passport or residence permit."
+      },
+      {
+        "text": "Your passport, if you have one, even as an EU citizen: some operators do not accept ID cards from other EU countries",
+        "optional": true
+      },
+      {
+        "text": "Your tax code, if you already have it: the law does not require it, but operators often ask for it",
+        "optional": true
+      },
+      {
+        "text": "An address in Italy, such as your rental contract or a signed letter from your host with a copy of their ID, if the operator asks",
+        "optional": true
+      }
+    ],
+    "afterArrival": [
+      "Buy the SIM in an operator's shop. Shops are usually more flexible than online activation if you have no tax code.",
+      "Compare offers yourself; this guide does not recommend an operator."
+    ],
+    "commonMistakes": [
+      "Bringing only an EU ID card. At least one operator asked for a passport instead.",
+      "Counting on online activation. Without an Italian digital identity or tax code it may not work, so a shop is the safer choice."
+    ],
+    "whatComesNext": [
+      "Nothing in this checklist is confirmed to need an Italian number. Some services, such as banks, may ask for one."
+    ]
+  }
+}

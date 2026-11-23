@@ -1,0 +1,62 @@
+{
+  "$schema": "../step.schema.json",
+  "title": "Get your tax code (codice fiscale)",
+  "appliesTo": ["eu", "non-eu"],
+  "optional": false,
+  "startFromHome": true,
+  "requires": [{ "step": "residence-permit", "status": "unknown" }],
+  "deadline": null,
+  "sources": [
+    {
+      "title": "Agenzia delle Entrate: Tax identification number for foreign citizens",
+      "url": "https://www.agenziaentrate.gov.it/portale/web/english/nse/individuals/tax-identification-number-for-foreign-citizens"
+    },
+    {
+      "title": "Agenzia delle Entrate: Form AA4/8 in English",
+      "url": "https://www.agenziaentrate.gov.it/portale/forms-versione-in-inglese-cittadini"
+    },
+    {
+      "title": "Agenzia delle Entrate: Book an appointment (Italian)",
+      "url": "https://www.agenziaentrate.gov.it/portale/prenota-un-appuntamento"
+    },
+    {
+      "title": "Italian Ministry of Foreign Affairs: Tax code",
+      "url": "https://www.esteri.it/en/servizi-opportunita/italiani-all-estero/codice_fiscale/"
+    }
+  ],
+  "lastChecked": "2026-11-17",
+  "guide": {
+    "whatItIs": [
+      "The tax code (codice fiscale) is a 16-character code that identifies you to Italian offices. Only the code issued by the Agenzia delle Entrate (Italian Revenue Agency) is valid.",
+      "Do it first: the transport pass and a bank account both need it."
+    ],
+    "bring": [
+      { "text": "A valid passport or ID card" },
+      {
+        "text": "Form AA4/8, filled in and signed (the English version is on the Agenzia delle Entrate site)"
+      },
+      {
+        "text": "Your passport with your study visa, and a document that shows you may stay in Italy, if you are a non-EU citizen",
+        "optional": true
+      }
+    ],
+    "fromHome": [
+      "Ask the Italian consulate or embassy in the country where you live. Each one has its own procedure, so check its website. At the embassies we checked, you book a virtual appointment on prenot@mi, upload the form and a scan of your ID, and get the certificate by email in about 15 days.",
+      "Or book your appointment in Bolzano before you travel. On the Agenzia delle Entrate booking site, choose \"Assistenza fiscale\", then \"Identificativi fiscali, abilitazioni, consegna documenti e istanze\", and tick \"Prima richiesta di codice fiscale\"."
+    ],
+    "afterArrival": [
+      "Go to your appointment at the Agenzia delle Entrate, Piazza Giorgio Ambrosoli 24, Bolzano (Mon–Fri 8:30–13:00). In Bressanone and Brunico, use the office at Piazza del Duomo 3, Bressanone.",
+      "Bring the form and your ID. You get the certificate with your code at the counter.",
+      "Non-EU students staying more than 90 days normally get the code from the Questura with their residence permit application. Ask the unibz International Relations Office whether you should go to the Agenzia delle Entrate first."
+    ],
+    "commonMistakes": [
+      "Going to the office without an appointment. First requests are by appointment only, and walk-ins are sent away.",
+      "Waiting until you arrive. A free appointment can be 2 to 4 weeks away, so apply or book from home.",
+      "Sending the request by email. The Agenzia delle Entrate says foreigners must make their first request in person, so an email may not be accepted."
+    ],
+    "whatComesNext": [
+      "Order your transport pass, which needs the tax code.",
+      "If you want an Italian bank account, the bank will ask for it too."
+    ]
+  }
+}
