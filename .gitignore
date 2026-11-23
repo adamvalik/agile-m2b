@@ -28,3 +28,6 @@ Thumbs.db
 
 .claude/
 .env*
+
+# Step data, generated from content/steps/ by scripts/build-steps.mjs (#44)
+/src/core/steps.generated.ts
