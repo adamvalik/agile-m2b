@@ -1,0 +1,66 @@
+{
+  "$schema": "../step.schema.json",
+  "title": "Get your transport pass",
+  "appliesTo": ["eu", "non-eu"],
+  "optional": false,
+  "startFromHome": true,
+  "requires": [
+    { "step": "tax-code", "status": "confirmed" },
+    { "step": "residence-permit", "status": "unknown" },
+    { "step": "sim-card", "status": "unknown" }
+  ],
+  "deadline": null,
+  "sources": [
+    {
+      "title": "südtirolmobil: U26 Pass",
+      "url": "https://www.altoadigemobilita.info/en/tickets/ticket-finder/suedtirolmobil-u26-pass"
+    },
+    {
+      "title": "südtirolmobil: Flex Pass",
+      "url": "https://www.suedtirolmobil.info/en/tickets/ticket-finder/suedtirolmonil-flex-pass"
+    },
+    {
+      "title": "südtirolmobil: Euregio Ticket Students",
+      "url": "https://suedtirolmobil.info/en/tickets/ticket-finder/euregio-ticket-students"
+    },
+    {
+      "title": "südtirolmobil: Fix365 Pass",
+      "url": "https://www.suedtirolmobil.info/en/tickets/ticket-finder/suedtirolmobil-fix365-pass"
+    },
+    {
+      "title": "südtirolmobil: Ticket offices",
+      "url": "https://www.suedtirolmobil.info/en/tickets/where-to-buy-tickets/suedtirolmobil-ticket-offices"
+    }
+  ],
+  "lastChecked": "2026-11-17",
+  "guide": {
+    "whatItIs": [
+      "A südtirolmobil pass covers buses and regional trains in South Tyrol, including regional trains to Trento. Under 26, the U26 Pass costs €153 for 365 days or €21 for 30 days.",
+      "26 or older: the Flex Pass (pay per kilometre, at most €22 a day and €650 a year) or, under 28, the Euregio Ticket Students (€377 a year). EU students can also choose the Fix365 Pass (€250 a year)."
+    ],
+    "bring": [
+      { "text": "Your Italian tax code" },
+      { "text": "Your ID card or passport (a photo or scan when you order online)" },
+      {
+        "text": "An email address, and a Visa or Mastercard, SEPA direct debit or pagoPA to pay. An Italian bank account is not needed."
+      }
+    ],
+    "fromHome": [
+      "If you already have your tax code, order the pass online in the südtirolmobil portal (myportal.suedtirolmobil.info). Order the U26 Pass at least one day before your 26th birthday."
+    ],
+    "afterArrival": [
+      "If you have not ordered yet, order online in the südtirolmobil portal as soon as you have your tax code.",
+      "Pick up the card at a südtirolmobil Infopoint, for example at the Bolzano bus station on Via Renon. In our team's experience it is ready a few days after ordering.",
+      "Until then, buy single tickets in the südtirolmobil app with your name and a credit card."
+    ],
+    "commonMistakes": [
+      "Trying to order before you have the tax code. The U26, Fix365 and Flex passes all ask for it.",
+      "Using the pass on long-distance or high-speed trains, which it does not cover. Cross-border trains to Innsbruck or Lienz and Nightliner buses need an extra ticket.",
+      "Non-EU students: the U26 Pass is for people who live in the EU or Switzerland or in the Province of Bolzano. If you are not sure you qualify, ask the südtirolmobil Service Desk (+39 0471 220 880). The Flex Pass is open to anyone who studies in South Tyrol."
+    ],
+    "whatComesNext": [
+      "Carry the pass with your ID card or passport when you travel.",
+      "If you do not renew it, the pass switches to the Flex tariff (pay per kilometre) at no extra cost."
+    ]
+  }
+}

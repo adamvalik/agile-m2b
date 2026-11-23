@@ -1,0 +1,67 @@
+{
+  "$schema": "../step.schema.json",
+  "title": "Request your residence permit (permesso di soggiorno)",
+  "appliesTo": ["non-eu"],
+  "optional": false,
+  "startFromHome": false,
+  "requires": [],
+  "deadline": { "workingDays": 8, "countsFrom": "arrival" },
+  "sources": [
+    {
+      "title": "Polizia di Stato: Il rilascio del permesso di soggiorno (Italian)",
+      "url": "https://www.poliziadistato.it/articolo/225"
+    },
+    {
+      "title": "Poste Italiane: Permessi di soggiorno (Italian)",
+      "url": "https://www.poste.it/prodotti/guida-rilascio-e-rinnovo-permesso-di-soggiorno.html"
+    },
+    {
+      "title": "unibz: Exchange Students' Guide (PDF)",
+      "url": "https://www.unibz.it/assets/Documents/2026-01-22-International-Students-Guide-2025.pdf"
+    }
+  ],
+  "lastChecked": "2026-11-17",
+  "guide": {
+    "whatItIs": [
+      "Non-EU students staying in Italy for more than three months need a residence permit for study. You must request it within 8 working days of entering Italy.",
+      "You apply at the post office with a kit. The receipt you get is your proof that you applied while the permit card is made."
+    ],
+    "bring": [
+      { "text": "The application form from the post office kit, filled in" },
+      { "text": "A €16 revenue stamp (marca da bollo), sold only in Italy at tobacconists" },
+      { "text": "Copies of every passport page with your personal details, visas and stamps" },
+      { "text": "Your unibz enrolment certificate (the International Relations Office sends it)" },
+      {
+        "text": "Your health insurance stamped by the embassy, or your registration with the Italian health service"
+      },
+      {
+        "text": "Proof of accommodation (rental contract or the owner's signed declaration) with a copy of the host's ID"
+      },
+      {
+        "text": "Proof that you have enough money for your stay (ask the International Relations Office which documents count)"
+      },
+      {
+        "text": "About €116 for the fees: the €16 stamp, €70.46 on the postal payment slip, and €30 at the counter"
+      }
+    ],
+    "afterArrival": [
+      "Pick up the yellow-band kit at any post office, then book an appointment with the unibz International Relations Office to fill it in together.",
+      "Pay the postal payment slip of €70.46 (€30.46 for the card and a €40 contribution).",
+      "Hand in the kit in person at a post office with a Sportello Amico counter, with your passport. Leave the envelope open. You pay €30 at the counter.",
+      "Keep the receipt and carry it with your passport. You also get a letter with the date of your Questura appointment, and the receipt has a login to track your application.",
+      "At the Questura (Largo Giovanni Palatucci 1, Bolzano) your fingerprints are taken. Bring your passport and visa, the appointment letter, the postal receipts, 4 passport photos and 1 copy of everything in the envelope.",
+      "By law the permit must be issued within 90 days. Collect it at the Questura once the online status says it is ready."
+    ],
+    "commonMistakes": [
+      "Missing the deadline. Count 8 working days from the day you enter Italy, and apply in your first days.",
+      "Sealing the envelope. It must be handed in open.",
+      "Forgetting a copy. You may be sent back if one is missing, so copy every passport page that has a stamp.",
+      "Travelling on the receipt alone. It is not a travel document. While your type D visa is valid you can travel in other Schengen countries; before a trip home, check with the Questura that you can re-enter."
+    ],
+    "whatComesNext": [
+      "With the permit or the receipt you can open an Italian bank account, if you want one.",
+      "Your tax code is normally assigned with this application. Ask the International Relations Office when and how you receive it.",
+      "If your stay is extended, request a renewal at least 90 days before the permit expires."
+    ]
+  }
+}
