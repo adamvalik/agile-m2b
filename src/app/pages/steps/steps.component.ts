@@ -9,7 +9,6 @@ import { STEPS } from '../../steps';
 @Component({
   selector: 'app-steps',
   templateUrl: './steps.component.html',
-  styleUrl: './steps.component.css',
 })
 export class Steps {
   protected readonly steps = inject(STEPS);

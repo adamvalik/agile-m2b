@@ -1,18 +1,18 @@
-<h1>All steps</h1>
-<p class="lead">
+<h1 class="text-2xl font-semibold tracking-tight sm:text-3xl">All steps</h1>
+<p class="mt-2 text-muted-foreground">
   Every step as it is written in the content files. The personal checklist picks the ones that apply
   to you.
 </p>
 
 @if (steps.length === 0) {
-  <p class="note">No steps yet.</p>
+  <p class="mt-6 text-muted-foreground">No steps yet.</p>
 } @else {
-  <ul class="steps">
+  <ul class="mt-6 grid gap-4">
     @for (step of steps; track step.id) {
-      <li class="step">
-        <h2>{{ step.title }}</h2>
-        <dl>
-          <dt>For</dt>
+      <li class="rounded-lg border p-4">
+        <h2 class="mb-2 text-lg font-medium">{{ step.title }}</h2>
+        <dl class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-sm">
+          <dt class="text-muted-foreground">For</dt>
           <dd>
             @if (step.appliesTo.length === 2) {
               EU and non-EU students
@@ -25,13 +25,17 @@
               (optional)
             }
           </dd>
-          <dt>Source</dt>
+          <dt class="text-muted-foreground">Source</dt>
           <dd>
-            <a [href]="mainSource(step).url" target="_blank" rel="noopener">{{
-              mainSource(step).title
-            }}</a>
+            <a
+              [href]="mainSource(step).url"
+              target="_blank"
+              rel="noopener"
+              class="underline underline-offset-4"
+              >{{ mainSource(step).title }}</a
+            >
           </dd>
-          <dt>Last checked</dt>
+          <dt class="text-muted-foreground">Last checked</dt>
           <dd>
             <time [attr.datetime]="step.lastChecked">{{ step.lastChecked }}</time>
           </dd>

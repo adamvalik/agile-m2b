@@ -63,6 +63,6 @@ describe('Steps', () => {
   it('says so when there are no steps yet', async () => {
     const page = await render([]);
 
-    expect(page.querySelector('.note')?.textContent).toContain('No steps yet');
+    expect(page.textContent).toContain('No steps yet');
   });
 });
