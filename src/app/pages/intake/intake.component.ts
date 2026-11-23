@@ -83,7 +83,8 @@ export class ShowErrorsAfterSubmit {
     provideHlmDatePickerConfig<Date>({ formatDate: formatArrivalDate, autoCloseOnSelect: true }),
   ],
   templateUrl: './intake.component.html',
-  styleUrl: './intake.component.css',
+  // Phone: the questions run down the page. Wider screens: a 560 px card, as in Figma.
+  host: { class: 'mx-auto block max-w-[35rem]' },
 })
 export class Intake {
   private readonly injector = inject(Injector);

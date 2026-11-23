@@ -29,8 +29,8 @@
   </div>
 }
 
-<form [formRoot]="intake" novalidate class="intake-card mt-6">
-  <div class="intake-card__body grid gap-8">
+<form [formRoot]="intake" novalidate class="mt-6 sm:overflow-hidden sm:rounded-xl sm:border">
+  <div class="grid gap-8 sm:px-4 sm:py-5">
     <fieldset hlmFieldSet>
       <legend hlmFieldLegend class="text-base">Are you an EU citizen?</legend>
       <p hlmFieldDescription class="-mt-2">
@@ -76,7 +76,7 @@
     </div>
   </div>
 
-  <div class="intake-card__footer grid gap-4">
+  <div class="mt-10 grid gap-4 sm:mt-0 sm:border-t sm:bg-muted/50 sm:p-4">
     <button hlmBtn type="submit" class="w-full">Show my checklist</button>
     <p class="text-center text-sm text-muted-foreground">
       We never ask for your name, documents, passport or tax code.

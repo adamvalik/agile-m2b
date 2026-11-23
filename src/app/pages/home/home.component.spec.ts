@@ -13,7 +13,7 @@ describe('Home', () => {
     expect(page.querySelector('h1')?.textContent).toContain(
       'Settle into your first weeks in Bolzano.',
     );
-    expect(page.querySelector('.lead')?.textContent).toContain(
+    expect(page.querySelector('h1 + p')?.textContent).toContain(
       'For incoming exchange students at unibz.',
     );
   });
