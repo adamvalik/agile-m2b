@@ -88,10 +88,10 @@ The full rules are in [`content/step.schema.json`](content/step.schema.json).
 
 To make a change:
 
-1. **New step:** copy [`content/templates/step.template.json`](content/templates/step.template.json) to `content/steps/<id>.json` (on GitHub: **Add file** → **Create new file**, then paste the template). **Existing step:** open its file.
+1. **New step:** copy [`content/templates/step.template.json`](content/templates/step.template.json) to `content/steps/<id>.json` (on GitHub: **Add file** → **Create new file**, then paste the template). Replace every `<...>` placeholder, set `requires` to real step ids or `[]`, and delete the guide section you don't need (`fromHome` or `afterArrival`, depending on `startFromHome`). **Existing step:** open its file.
 2. Edit the fields and set `lastChecked` to the day you checked the sources. In VS Code, the `$schema` line at the top gives autocomplete and marks mistakes.
 3. Open a pull request. On GitHub this works in the browser: click the pencil icon, edit, then **Commit changes** → **Create a new branch** → **Propose changes**. Use a commit message such as `fix(content): update tax code office hours`, or `feat(content): add sim-card step` for a new step.
-4. Check the PR's preview link (see [Deployment](#deployment)) and ask a teammate to review. CI will also check every step file once [#45](https://github.com/adamvalik/agile-m2b/issues/45) is done. After the merge, the live app updates.
+4. Check the PR's preview link (see [Deployment](#deployment)) and ask a teammate to review. CI checks every step file and names the file and field if something is missing; to check before you push, run `npm run check:content`. After the merge, the live app updates.
 
 ## How we work
 
