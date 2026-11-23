@@ -1,4 +1,5 @@
-import { buildChecklist, type ChecklistStep, type StepLink } from './checklist';
+import { buildChecklist, type ChecklistStep } from './checklist';
+import type { StepLink } from './step';
 
 function step(id: string, fields: Partial<ChecklistStep> = {}): ChecklistStep {
   return {

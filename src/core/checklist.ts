@@ -1,35 +1,16 @@
-/** EU or non-EU citizen, as the student answers in the intake (#5). */
-export type StudentStatus = 'eu' | 'non-eu';
+import type { Audience, Step } from './step';
 
-/** The intake answers the checklist depends on. */
+/** The intake answers the checklist depends on (#5). */
 export interface ChecklistAnswers {
-  status: StudentStatus;
-}
-
-/** One entry of a step's `requires` list (see content/step.schema.json). */
-export interface StepLink {
-  step: string;
-  status: 'confirmed' | 'unknown';
-}
-
-/** A step's deadline (see content/step.schema.json). */
-export interface StepDeadline {
-  workingDays: number;
-  countsFrom: 'arrival' | 'schengen-entry';
+  /** EU or non-EU citizen, as the student answers in the intake. */
+  status: Audience;
 }
 
 /**
- * The fields of a step that the checklist reads. `id` is the step file name without .json;
- * the other fields come from the step file. Full steps with a title, sources and guide fit
- * this type too and are returned unchanged.
+ * The fields of a step that the checklist reads, taken from `Step` in step.ts. Full steps
+ * with a title, sources and guide fit this type too and are returned unchanged.
  */
-export interface ChecklistStep {
-  id: string;
-  appliesTo: readonly StudentStatus[];
-  optional: boolean;
-  requires: readonly StepLink[];
-  deadline: StepDeadline | null;
-}
+export type ChecklistStep = Pick<Step, 'id' | 'appliesTo' | 'optional' | 'requires' | 'deadline'>;
 
 /**
  * Builds the student's checklist: keeps the steps that apply to them and orders them so
