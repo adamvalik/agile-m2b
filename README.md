@@ -79,7 +79,30 @@ The [`app` workflow](.github/workflows/app.yml) runs the unit tests and the buil
 
 ## Edit a step
 
-Coming with [#46](https://github.com/adamvalik/agile-m2b/issues/46), once the step file format ([#43](https://github.com/adamvalik/agile-m2b/issues/43)) is in place.
+Every step in the checklist is one JSON file in [`content/steps/`](content/steps/). The file name is the step's id: `tax-code.json` is the step `tax-code`. Changing a step needs no code.
+
+Facts come first: check them against the official sources and note them in [`research/step-facts/`](research/step-facts/). Anything an official source does not confirm stays out of the guide or is marked `unknown`. Point to official pages, and don't name or recommend a company or provider where students have a choice, such as a bank or mobile operator. Naming one is fine only when it is the official way to do the step, like Poste Italiane for the residence permit kit.
+
+| Field | What it means |
+| --- | --- |
+| `title` | Short action shown on the checklist, for example "Get your tax code" (up to 80 characters) |
+| `appliesTo` | Who sees the step: `eu`, `non-eu` or both |
+| `optional` | `true` if students can skip it, like the SIM card |
+| `startFromHome` | `true` if it can start before travelling; the guide then needs `fromHome`, otherwise `afterArrival` |
+| `requires` | Ids of steps that must come first, each `confirmed` or `unknown` (`unknown` is not shown as a firm requirement); `[]` if none |
+| `deadline` | `null`, or the number of `workingDays` and what it `countsFrom` (`arrival` or `schengen-entry`) |
+| `sources` | Official pages, each with a title and an `https://` link; the first is shown as the main source |
+| `lastChecked` | Date the facts were last checked against the sources, as `YYYY-MM-DD` |
+| `guide` | What the student reads: `whatItIs`, `bring`, `fromHome` or `afterArrival`, `commonMistakes`, `whatComesNext`. Short items in plain English; in `bring`, add `"optional": true` to items only some students need |
+
+The full rules are in [`content/step.schema.json`](content/step.schema.json).
+
+To make a change:
+
+1. **New step:** copy [`content/templates/step.template.json`](content/templates/step.template.json) to `content/steps/<id>.json` (on GitHub: **Add file** → **Create new file**, then paste the template). Replace every `<...>` placeholder, set `requires` to real step ids or `[]`, and delete the guide section you don't need (`fromHome` or `afterArrival`, depending on `startFromHome`). **Existing step:** open its file.
+2. Edit the fields and set `lastChecked` to the day you checked the sources. In VS Code, the `$schema` line at the top gives autocomplete and marks mistakes.
+3. Open a pull request. On GitHub this works in the browser: click the pencil icon, edit, then **Commit changes** → **Create a new branch** → **Propose changes**. Use a commit message such as `fix(content): update tax code office hours`, or `feat(content): add sim-card step` for a new step.
+4. Check the PR's preview link (see [Deployment](#deployment)) and ask a teammate to review. CI checks every step file and names the file and field if something is missing; to check before you push, run `npm run check:content`. After the merge, the live app updates.
 
 ## How we work
 
@@ -113,6 +136,7 @@ We work in Scrum with three two-week sprints.
 | Path | What it holds |
 | --- | --- |
 | [src/](src/) | The Angular app (`src/app/`) and plain TypeScript logic (`src/core/`) |
+| [content/](content/) | Step files, their schema and a template; see [Edit a step](#edit-a-step) |
 | [libs/ui/](libs/ui/) | spartan/ui components used by the app |
 | [design/](design/README.md) | Link to the Figma file and exported screens |
 | [scripts/](scripts/) | Build-time scripts, such as the step content check |

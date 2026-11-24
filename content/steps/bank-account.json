@@ -1,0 +1,52 @@
+{
+  "$schema": "../step.schema.json",
+  "title": "Open an Italian bank account",
+  "appliesTo": ["eu", "non-eu"],
+  "optional": true,
+  "startFromHome": false,
+  "requires": [
+    { "step": "tax-code", "status": "confirmed" },
+    { "step": "residence-permit", "status": "confirmed" },
+    { "step": "sim-card", "status": "unknown" }
+  ],
+  "deadline": null,
+  "sources": [
+    {
+      "title": "unibz: Exchange Students' Guide, Bank Account Opening (PDF)",
+      "url": "https://www.unibz.it/assets/Documents/2026-01-22-International-Students-Guide-2025.pdf"
+    },
+    {
+      "title": "Your Europe (EU): Bank accounts in the EU",
+      "url": "https://europa.eu/youreurope/citizens/consumers/financial-products-and-services/bank-accounts-eu/index_en.htm"
+    },
+    {
+      "title": "Central Bank of Ireland: What is IBAN discrimination?",
+      "url": "https://centralbank.ie/consumer-hub/explainers/what-is-iban-discrimination-and-what-can-i-do-about-it"
+    }
+  ],
+  "lastChecked": "2026-11-17",
+  "guide": {
+    "whatItIs": [
+      "Optional. A euro account from another SEPA country works in Italy: companies and employers must accept a euro IBAN from any SEPA country.",
+      "The transport pass can be paid by card, so it does not need an Italian account."
+    ],
+    "bring": [
+      { "text": "Your passport" },
+      { "text": "Your Italian tax code" },
+      { "text": "Your unibz certificate of enrolment or a self-declaration" },
+      {
+        "text": "Your residence permit or the post office receipt for your application, if you are a non-EU citizen",
+        "optional": true
+      }
+    ],
+    "afterArrival": [
+      "Compare banks' offers and open the account at a branch. Some online-only accounts are open only to Italian residents.",
+      "Ask the bank before you go whether it needs anything else; this guide does not recommend a bank."
+    ],
+    "commonMistakes": [
+      "Opening an account you do not need. Check first whether your home account works for rent and bills.",
+      "Going before you have the tax code. Banks ask for it."
+    ],
+    "whatComesNext": ["Use the Italian IBAN for rent or other payments, if you need it."]
+  }
+}

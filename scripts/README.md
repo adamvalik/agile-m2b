@@ -13,7 +13,7 @@ npm run test:scripts    # run the tests for the check
 
 It runs automatically:
 
-- before `npm start` and `npm run build` (npm `prestart` and `prebuild`), so a broken step file also stops the Vercel build
+- before `npm start`, `npm test` and `npm run build`, as the first part of the step data build below, so a broken step file also stops the Vercel build
 - in CI, as the "Step content check" step of the [`app` workflow](../.github/workflows/app.yml), on every pull request and every push to `main`
 
 What it checks:
@@ -32,3 +32,17 @@ What it checks:
 An empty or missing `content/steps/` folder only prints a warning, so the build keeps working until the first step files arrive (#50). Files in `content/templates/` are not checked.
 
 `checkContent()` is exported, so the step data build (#44) can reuse it instead of reading the files a second time.
+
+## Step data build (`build-steps.mjs`, #44)
+
+Turns the step files into the data the app shows, so editing and merging a step file updates the deployed app with no code change.
+
+```bash
+npm run build:steps     # check the step files, then write src/core/steps.generated.ts
+```
+
+It runs the content check first and writes nothing if any step file is wrong. Otherwise it writes `src/core/steps.generated.ts`: every step with its `id` (the file name), sorted by id, without the `$schema` line, typed as `Step` from [src/core/step.ts](../src/core/step.ts) so the TypeScript build checks the data once more.
+
+It runs automatically before `npm start`, `npm test`, `npm run watch` and `npm run build` (npm `pre` scripts), so Vercel and CI always build from the current step files. The generated file is not committed (it is in `.gitignore`). `ng serve` does not watch `content/steps/`: after editing a step file, restart `npm start` to see the change.
+
+App code reads the steps through `loadSteps()` in [src/core/steps.ts](../src/core/steps.ts), or `inject(STEPS)` in a component ([src/app/steps.ts](../src/app/steps.ts)). The page `/steps` lists every loaded step with its main source and last-checked date.
