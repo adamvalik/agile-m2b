@@ -21,18 +21,19 @@ import { HlmDatePickerImports, provideHlmDatePickerConfig } from '@spartan-ng/he
 import { HlmFieldImports } from '@spartan-ng/helm/field';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { HlmRadioGroupImports } from '@spartan-ng/helm/radio-group';
-import { type Answers, type StudentStatus, loadAnswers, saveAnswers } from '../../../core/answers';
+import { type Answers, loadAnswers, saveAnswers } from '../../../core/answers';
 import {
   checkArrivalDate,
   formatArrivalDate,
   fromIsoDate,
   toIsoDate,
 } from '../../../core/arrival-date';
+import type { Audience } from '../../../core/step';
 
 const thisYear = new Date().getFullYear();
 
 interface IntakeModel {
-  status: StudentStatus | '';
+  status: Audience | '';
   arrivalDate: Date | null;
 }
 

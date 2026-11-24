@@ -5,6 +5,7 @@ import {
   loadAnswers,
   saveAnswers,
 } from './answers';
+import { buildChecklist, type ChecklistStep } from './checklist';
 
 function memoryStorage(initial: Record<string, string> = {}): AnswersStorage {
   const items = new Map(Object.entries(initial));
@@ -15,6 +16,12 @@ function memoryStorage(initial: Record<string, string> = {}): AnswersStorage {
 }
 
 const answers: Answers = { status: 'non-eu', arrivalDate: '2027-03-01' };
+
+function storageWith(saved: Answers): AnswersStorage {
+  const storage = memoryStorage();
+  saveAnswers(saved, storage);
+  return storage;
+}
 
 describe('saveAnswers and loadAnswers', () => {
   it('return the saved answers', () => {
@@ -44,6 +51,33 @@ describe('saveAnswers and loadAnswers', () => {
       },
     };
     expect(saveAnswers(answers, storage)).toBe(false);
+  });
+});
+
+describe('Answers', () => {
+  it('can be passed straight to buildChecklist', () => {
+    const steps: ChecklistStep[] = [
+      {
+        id: 'tax-code',
+        appliesTo: ['eu', 'non-eu'],
+        optional: false,
+        requires: [],
+        deadline: null,
+      },
+      {
+        id: 'residence-permit',
+        appliesTo: ['non-eu'],
+        optional: false,
+        requires: [],
+        deadline: null,
+      },
+    ];
+    const saved = loadAnswers(storageWith(answers))!;
+
+    expect(buildChecklist(steps, saved).map((step) => step.id)).toEqual([
+      'tax-code',
+      'residence-permit',
+    ]);
   });
 });
 

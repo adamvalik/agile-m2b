@@ -1,14 +1,13 @@
 import { checkArrivalDate } from './arrival-date';
+import type { Audience } from './step';
 
 /**
- * EU or non-EU citizen. The same values as `appliesTo` in content/step.schema.json, and the same
- * name as in the checklist builder (#51), so saved answers can be passed to `buildChecklist`.
+ * The student's answers to the two intake questions. Nothing else is ever stored.
+ * They fit `ChecklistAnswers`, so they can be passed straight to `buildChecklist` (#51).
  */
-export type StudentStatus = 'eu' | 'non-eu';
-
-/** The student's answers to the two intake questions. Nothing else is ever stored. */
 export interface Answers {
-  status: StudentStatus;
+  /** EU or non-EU citizen. */
+  status: Audience;
   /** Calendar day as YYYY-MM-DD. */
   arrivalDate: string;
 }
