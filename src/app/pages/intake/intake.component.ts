@@ -10,9 +10,9 @@ import {
   viewChild,
 } from '@angular/core';
 import { form, FormField, FormRoot, required, validate } from '@angular/forms/signals';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideChevronLeft, lucideCircleAlert, lucideCircleCheck } from '@ng-icons/lucide';
+import { lucideChevronLeft, lucideCircleAlert } from '@ng-icons/lucide';
 import { provideBrnCalendarI18n } from '@spartan-ng/brain/calendar';
 import { ErrorStateMatcher } from '@spartan-ng/brain/forms';
 import { HlmAlertImports } from '@spartan-ng/helm/alert';
@@ -71,7 +71,7 @@ export class ShowErrorsAfterSubmit {
   providers: [
     ShowErrorsAfterSubmit,
     { provide: ErrorStateMatcher, useExisting: ShowErrorsAfterSubmit },
-    provideIcons({ lucideChevronLeft, lucideCircleAlert, lucideCircleCheck }),
+    provideIcons({ lucideChevronLeft, lucideCircleAlert }),
     // The calendar starts on Monday, as in Italy, and offers last year to two years ahead.
     provideBrnCalendarI18n({
       firstDayOfWeek: () => 1,
@@ -98,7 +98,13 @@ export class Intake {
   protected readonly minDate = new Date(thisYear - 1, 0, 1);
   protected readonly maxDate = new Date(thisYear + 2, 11, 31);
 
-  private readonly model = signal<IntakeModel>(initialModel(loadAnswers()));
+  private readonly router = inject(Router);
+  private readonly savedBefore = loadAnswers();
+
+  /** Back goes to the checklist when the student came to change their answers (#49). */
+  protected readonly backLink = this.savedBefore ? '/checklist' : '/';
+
+  private readonly model = signal<IntakeModel>(initialModel(this.savedBefore));
 
   protected readonly intake = form(
     this.model,
@@ -117,8 +123,7 @@ export class Intake {
           this.errorState.submitted.set(true);
           const answers = toAnswers(this.model());
           if (answers && saveAnswers(answers)) {
-            this.saved.set(answers);
-            this.saveFailed.set(false);
+            await this.router.navigateByUrl('/checklist');
           } else {
             this.saveFailed.set(true);
           }
@@ -126,7 +131,6 @@ export class Intake {
         },
         onInvalid: () => {
           this.errorState.submitted.set(true);
-          this.saved.set(null);
           afterNextRender(() => this.summary()?.nativeElement.focus(), {
             injector: this.injector,
           });
@@ -139,20 +143,7 @@ export class Intake {
     () => this.errorState.submitted() && this.intake().invalid(),
   );
 
-  private readonly saved = signal<Answers | null>(null);
   protected readonly saveFailed = signal(false);
-
-  /** "Saved" stays visible only while the form still shows the saved answers. */
-  protected readonly showSaved = computed(() => {
-    const saved = this.saved();
-    const current = toAnswers(this.model());
-    return (
-      !!saved &&
-      !!current &&
-      saved.status === current.status &&
-      saved.arrivalDate === current.arrivalDate
-    );
-  });
 
   protected firstError(errors: readonly { message?: string }[]): string {
     return errors[0]?.message ?? '';

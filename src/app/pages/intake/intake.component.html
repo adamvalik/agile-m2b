@@ -1,4 +1,4 @@
-<a hlmBtn variant="ghost" size="sm" routerLink="/" class="-ms-2.5">
+<a hlmBtn variant="ghost" size="sm" [routerLink]="backLink" class="-ms-2.5">
   <ng-icon name="lucideChevronLeft" aria-hidden="true" />
   Back
 </a>
@@ -10,14 +10,6 @@
   <div hlmAlert variant="destructive" class="mt-6" tabindex="-1" #summary>
     <ng-icon name="lucideCircleAlert" aria-hidden="true" />
     <h2 hlmAlertTitle>{{ messages.summary }}</h2>
-  </div>
-}
-
-@if (showSaved()) {
-  <div hlmAlert class="mt-6">
-    <ng-icon name="lucideCircleCheck" aria-hidden="true" />
-    <h2 hlmAlertTitle>Answers saved.</h2>
-    <p hlmAlertDescription>Your checklist is coming soon.</p>
   </div>
 }
 

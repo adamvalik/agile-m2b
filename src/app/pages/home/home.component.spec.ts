@@ -18,10 +18,10 @@ describe('Home', () => {
     );
   });
 
-  it('leads to the two intake questions', async () => {
+  it('leads to the checklist, which asks the two questions first when needed', async () => {
     const fixture = TestBed.createComponent(Home);
     await fixture.whenStable();
-    const link = (fixture.nativeElement as HTMLElement).querySelector('a[href="/intake"]');
+    const link = (fixture.nativeElement as HTMLElement).querySelector('a[href="/checklist"]');
 
     expect(link?.textContent).toContain('Get my checklist');
   });

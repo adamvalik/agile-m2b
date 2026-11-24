@@ -1,0 +1,68 @@
+<h1 class="text-2xl font-semibold tracking-tight sm:text-3xl">Your checklist</h1>
+
+@if (answers; as answers) {
+  <section
+    aria-label="Your answers"
+    class="mt-6 flex items-center justify-between gap-4 rounded-xl bg-muted/60 p-4"
+  >
+    <div>
+      <p class="font-medium">{{ answers.status === 'eu' ? 'EU citizen' : 'Non-EU citizen' }}</p>
+      <p class="text-sm text-muted-foreground">Arriving {{ arrival }}</p>
+    </div>
+    <a hlmBtn variant="outline" routerLink="/intake">
+      Change<span class="sr-only"> your answers</span>
+    </a>
+  </section>
+
+  <ol class="mt-6 grid gap-3" aria-label="Steps in the order to do them">
+    @for (item of items; track item.step.id) {
+      <li>
+        <a
+          [routerLink]="['/steps', item.step.id]"
+          class="flex flex-wrap items-center gap-3 rounded-xl border p-4 transition-colors hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+          [class.border-2]="item.state === 'next'"
+          [class.border-primary]="item.state === 'next'"
+          [class.border-dashed]="item.state === 'optional'"
+        >
+          <ng-icon
+            [name]="icon(item)"
+            size="1.25rem"
+            aria-hidden="true"
+            class="shrink-0"
+            [class.text-amber-700]="item.dueDate && item.state !== 'next'"
+          />
+          <!-- Badges sit beside the text and move below it when the row gets too narrow. -->
+          <span class="min-w-40 flex-1">
+            <span class="block font-medium">{{ item.step.title }}</span>
+            <span class="mt-0.5 block text-sm text-muted-foreground">{{ note(item) }}</span>
+          </span>
+          <span class="ms-auto flex shrink-0 flex-col items-end gap-1.5">
+            @switch (item.state) {
+              @case ('next') {
+                <span hlmBadge>Next</span>
+              }
+              @case ('waiting') {
+                <span hlmBadge variant="secondary">Waiting</span>
+              }
+              @case ('optional') {
+                <span hlmBadge variant="outline">Optional</span>
+              }
+            }
+            @if (item.dueDate; as due) {
+              <span hlmBadge class="bg-amber-700 text-white">Due {{ formatDueDate(due) }}</span>
+            }
+          </span>
+        </a>
+      </li>
+    }
+  </ol>
+
+  <p class="mt-8 text-sm text-muted-foreground">
+    Every guide shows its official source and the date we last checked it.
+  </p>
+} @else {
+  <p class="mt-3 text-muted-foreground">
+    Answer two quick questions first, so we can show the steps that apply to you.
+  </p>
+  <a hlmBtn routerLink="/intake" class="mt-6">Answer the questions</a>
+}
