@@ -47,9 +47,18 @@ If you use a Git GUI and the hook does not run, make sure Node.js is available t
 
 ## Pull requests
 
-Every pull request is checked by GitHub Actions (`commitlint` workflow), which validates all commit messages in the PR. A PR with a wrongly formatted commit cannot be merged once the check is marked as required.
+`main` is protected by a ruleset (**Settings → Rules → Rulesets → main**). A pull request can be merged only when:
 
-If the check fails because of an old commit message, rewrite it:
+- **one other team member has approved it.** Your own approval does not count. A new commit after the approval dismisses it, so the reviewer approves again.
+- **the required checks pass:** `check` (content check, tests and build) and `commitlint` (commit messages). The `deploy` job gives the preview link but is not required.
+
+Nobody can push to `main` directly, force-push to it, or delete it.
+
+**Reviewers are requested automatically.** [.github/CODEOWNERS](.github/CODEOWNERS) lists the whole team, so every pull request asks the other three for a review. One approval from any of them is enough; agree in the PR or on WhatsApp who takes it. Review within one working day.
+
+**Merging without a review.** The [Definition of Done](definition-of-done.md#merging-without-a-review) allows it for minor documentation changes and for documents that record something the team already agreed on elsewhere. The pull request then says why it needs no review and where it was agreed, and the repository admin (Adam) merges it with "bypass rules". Code, step files in `content/` and research facts always need an approval.
+
+If the `commitlint` check fails because of an old commit message, rewrite it:
 
 ```bash
 git rebase -i origin/main    # mark the wrong commits as "reword"
@@ -57,3 +66,14 @@ git push --force-with-lease
 ```
 
 Please do not bypass the local hook with `--no-verify`.
+
+## Issues and the board
+
+The backlog and the sprint board are the GitHub project [M2B Agile Processes](https://github.com/users/adamvalik/projects/1).
+
+- **Stories** are issues labelled `story`, written with the template "User story", "Acceptance criteria" and "Dependencies". They carry the Priority (P0 to P2) and the Estimate in story points.
+- **Tasks** are sub-issues of their story, labelled `task`, each with one owner. Tasks have no points.
+- **Sprint board view:** filtered to `label:task` and grouped by Parent issue, so each story is a row with its tasks moving across the Status columns.
+- **Stories view:** a table filtered to `label:story`, with Sub-issues progress, Estimate, Priority, Sprint and Status.
+- **Status of a story:** In progress when its first task starts; Done when it meets the Definition of Done and is accepted at the Sprint Review.
+- A task moves to In review when its pull request is open, and to Done when the pull request is merged.

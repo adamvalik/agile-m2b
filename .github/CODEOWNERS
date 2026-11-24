@@ -1,0 +1,3 @@
+# Every pull request automatically requests a review from the other team members.
+# One approval from any of them is enough (ruleset on main); see CONTRIBUTING.md.
+* @adamvalik @laurelcrelia @TomasKarolHoger @richardskokan
