@@ -114,10 +114,10 @@ We work in Scrum with three two-week sprints.
 | 2 | 26 November to 9 December | Planned at Sprint 2 Planning |
 | 3 | 10 to 23 December | Planned at Sprint 3 Planning |
 
-- **Backlog and task board:** [M2B Agile Processes](https://github.com/users/adamvalik/projects/1) on GitHub Projects. Stories and tasks are issues in this repository, with priority (P0 to P2) and estimates in story points on stories.
+- **Backlog and task board:** [M2B Agile Processes](https://github.com/users/adamvalik/projects/1) on GitHub Projects. Stories (label `story`) and their tasks (sub-issues, label `task`) are issues in this repository, with priority (P0 to P2) and estimates in story points on stories; see [CONTRIBUTING.md](CONTRIBUTING.md#issues-and-the-board).
 - **Workflow:** Product Backlog → Sprint Backlog → In progress → In review → Done.
 - **Definition of Done:** [definition-of-done.md](definition-of-done.md), reviewed at every retrospective.
-- **Changes:** every change goes through a pull request reviewed by another team member. Commit messages follow Conventional Commits, checked locally and in CI; see [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Changes:** every change goes through a pull request; `main` requires one approval from another team member and passing checks, and reviewers are requested automatically. Commit messages follow Conventional Commits, checked locally and in CI. Details, including the few exceptions, in [CONTRIBUTING.md](CONTRIBUTING.md).
 - **Testing:** we can test only with students who are already in Bolzano, so value before arrival is checked indirectly.
 - **Coordination:** a WhatsApp group for quick questions, GitHub for everything that should last.
 - **Meetings:** decisions and next steps from every team meeting go into the [meeting log](sprints/meeting-log.md).

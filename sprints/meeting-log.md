@@ -21,6 +21,55 @@ Template for a new entry:
 
 ---
 
+## 2026-11-24, Sprint 1 Retrospective (13:00–13:30)
+
+**Attended:** Adam, Laurel, Tom, Richard
+
+Full notes: [sprint-1-retrospective.md](sprint-1-retrospective.md)
+
+### Discussed and decided
+
+- **Went well:** all 19 points delivered and the full flow works on the live app; thorough reviews of the facts; CI with the content check and a preview link for every PR.
+- **Difficulties:** the stack decision slipped from 13 to 16 November, so app work started in the second week; PRs waited days for review; the user-facing stories (#5, #6) were merged on the last morning; no feedback from users yet.
+- **Collaboration:** reviews were thorough but slow to start; one sync in the middle of the sprint; Tom carried all UI work; on the board, stories and their tasks blend together, so story progress was hard to see.
+- **Planning:** 19 points planned, 19 closed. About half the points closed in the last two days.
+- **Improvements for Sprint 2:** make stories stand out on the board (`story` label, task board grouped by parent issue, a "Stories" view); test the next iteration with students at the end of Sprint 2 (#14); enforce reviews in the repository (ruleset on `main`: one approval and passing checks; CODEOWNERS requests reviewers automatically) and review within one working day.
+- **Definition of Done:** minor documentation changes, and documents that record a decision the team already agreed on, can be merged without a review; recorded in the change log of [definition-of-done.md](../definition-of-done.md).
+
+### Next steps
+
+| Who | What | Issue |
+| --- | --- | --- |
+| Adam | Set up the `story` label and the board views (label added to all stories on 24 Nov) | |
+| Adam | Set up the ruleset on `main` and CODEOWNERS, and document them in CONTRIBUTING.md (ruleset active since 24 Nov) | |
+| everyone | Review requested PRs within one working day | |
+
+---
+
+## 2026-11-24, Sprint 1 Review (12:30–13:00)
+
+**Attended:** Adam, Laurel, Tom, Richard
+
+Full notes: [sprint-1-review.md](sprint-1-review.md)
+
+### Discussed and decided
+
+- **Demo:** showed the full flow on the [live app](https://m2b-agile.vercel.app/): first page, intake, personal checklist, and a guide with its source and last-checked date.
+- **Accepted stories:** #1, #2, #28, #4, #5, #6: 19 of 19 points
+- **Sprint Goal:** fully met, all stories were completed by the definition of done.
+- **Feedback:** no user testing in Sprint 1, because the full flow was ready only on the review day; testing with students (#14) is planned for the end of Sprint 2, on the next iteration. Team feedback: the core works, but the app is too simple, like a blog post with five static guides and little personalisation. Accepted: we revise the Product Backlog.
+- **Product Backlog changes:** direction from a static checklist to an interactive companion: progress, a timeline with deadlines, more personalisation, help at the office, and steps beyond the official ones (#12, #13, #15, #16, #23 to #26). Stories are written and estimated in a refinement before Sprint 2 planning. Parts of #7 to #12 are already built and get re-estimated.
+
+### Next steps
+
+| Who | What | Issue |
+| --- | --- | --- |
+| everyone | Refine the Product Backlog: new stories for the themes, re-estimate #7 to #12 | |
+| Adam | Write the Sprint 1 deliverable report | |
+| everyone | Sprint 2 planning | |
+
+---
+
 ## 2026-11-17, team sync (13:00–13:30)
 
 **Attended:** Adam, Laurel, Tom, Richard
