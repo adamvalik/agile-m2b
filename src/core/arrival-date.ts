@@ -54,5 +54,30 @@ export function toIsoDate(date: Date): string {
 
 /** Formats a date the way the screens show it, for example "Mon 1 March 2027". */
 export function formatArrivalDate(date: Date): string {
-  return `${WEEKDAYS[date.getDay()]} ${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+  return `${formatDueDate(date)} ${date.getFullYear()}`;
+}
+
+/** Formats a due date without the year, for example "Wed 10 March". */
+export function formatDueDate(date: Date): string {
+  return `${WEEKDAYS[date.getDay()]} ${date.getDate()} ${MONTHS[date.getMonth()]}`;
+}
+
+/** Formats a date without the weekday, for example "17 November 2026". */
+export function formatLongDate(date: Date): string {
+  return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+/**
+ * The day a deadline of `workingDays` falls on, counting from the day after `start`.
+ * Saturdays count as working days and Sundays do not, as the step facts say for now;
+ * public holidays are not taken into account.
+ */
+export function addWorkingDays(start: Date, workingDays: number): Date {
+  const day = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  let left = workingDays;
+  while (left > 0) {
+    day.setDate(day.getDate() + 1);
+    if (day.getDay() !== 0) left--;
+  }
+  return day;
 }
