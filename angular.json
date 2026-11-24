@@ -11,7 +11,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "type": "component",
-          "style": "css",
+          "style": "none",
           "inlineTemplate": false,
           "inlineStyle": false
         }

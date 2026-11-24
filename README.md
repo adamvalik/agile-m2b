@@ -37,6 +37,7 @@ More in the [Product Vision](product-vision.md) and the [research](research/READ
 | Part | Choice |
 | --- | --- |
 | Framework | [Angular](https://angular.dev/) with TypeScript, a single-page app |
+| UI | [Tailwind CSS](https://tailwindcss.com/) v4 and [spartan/ui](https://www.spartan.ng/) components, matching the [Figma screens](design/README.md) |
 | App logic | Plain TypeScript in `src/core/`, data in `localStorage` | 
 | Step content | Editable files in `content/steps/`, checked and turned into JSON at build time |
 | Hosting | [Vercel](https://vercel.com/) | 
@@ -60,9 +61,17 @@ Where code goes:
 | Folder | What lives there | 
 | --- | --- | 
 | `src/app/` | Angular components and pages (UI) | 
+| `libs/ui/` | spartan/ui components, copied into the repo so we can change them, imported as `@spartan-ng/helm/<name>` | 
 | `src/core/` | Checklist logic, answers and progress in `localStorage` | 
 | `content/` | Step files and their schema | 
 | `scripts/` | Content check and build step | 
+
+To add another spartan/ui component (see the [list](https://www.spartan.ng/components)), for example a badge:
+
+```bash
+npm install --no-save @spartan-ng/cli   # the generator, kept out of package.json because it pulls in Nx
+npx ng g @spartan-ng/cli:ui badge       # copies it into libs/ui/ and adds its path to tsconfig.json
+```
 
 ## Deployment
 
@@ -128,6 +137,8 @@ We work in Scrum with three two-week sprints.
 | --- | --- |
 | [src/](src/) | The Angular app (`src/app/`) and plain TypeScript logic (`src/core/`) |
 | [content/](content/) | Step files, their schema and a template; see [Edit a step](#edit-a-step) |
+| [libs/ui/](libs/ui/) | spartan/ui components used by the app |
+| [design/](design/README.md) | Link to the Figma file and exported screens |
 | [scripts/](scripts/) | Build-time scripts, such as the step content check |
 | [public/](public/) | Static files served as they are (favicon) |
 | [project-context.md](project-context.md) | Team project context (Deliverable 1) |

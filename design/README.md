@@ -27,5 +27,5 @@
 - **Kit:** [spartan/ui for Figma](https://www.figma.com/community/file/1691576794328156128/spartan-ui-for-figma-a-1-1-design-kit-of-spartan-ng), a 1:1 kit of the spartan/ui Angular components. Every screen is built from its components (Button, Item, Badge, Alert, Field Set, Field, Radio Group, Date Picker, Progress, Card, Separator), text styles and variables, so Figma's Dev Mode shows the matching Angular code.
 - **Theme:** neutral main colour (Accent "Default"), Style "Nova", light mode. The colour palette is decided later; changing it is one variable mode.
 - **Status colours:** a deadline uses the kit's Amber palette and "Done" its Green palette, only on those badges and icons. In code this needs a small CSS class that switches the accent variables.
-- **Font:** Geist, the kit's font. The app currently uses the system font.
+- **Font:** Geist, the kit's font. The app loads it from the `@fontsource-variable/geist` package, so no font request goes to another server.
 - **Desktop layout:** one centred column of 640 px; the intake form sits in a card of 560 px; the step states are a two-column grid; the guide moves the official source, facts and sources into a side column. Tablet widths use the same centred column.
