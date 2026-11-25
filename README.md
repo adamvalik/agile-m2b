@@ -106,13 +106,13 @@ To make a change:
 
 ## How we work
 
-We work in Scrum with three two-week sprints.
+We work in Scrum with three sprints in five weeks: Sprint 2 is one week, the others two.
 
 | Sprint | Dates | Goal |
 | --- | --- | --- |
 | 1 | 11 to 25 November | Public app with intake and a personal, ordered checklist built from checked facts ([plan](sprints/sprint-1-plan.md)) |
-| 2 | 26 November to 9 December | Planned at Sprint 2 Planning |
-| 3 | 10 to 23 December | Planned at Sprint 3 Planning |
+| 2 | 26 November to 2 December | Mark steps as done and see a personal timeline of the first weeks, tested with students in Bolzano ([plan](sprints/sprint-2-plan.md), draft) |
+| 3 | 3 to 16 December | Planned at Sprint 3 Planning |
 
 - **Backlog and task board:** [M2B Agile Processes](https://github.com/users/adamvalik/projects/1) on GitHub Projects. Stories (label `story`) and their tasks (sub-issues, label `task`) are issues in this repository, with priority (P0 to P2) and estimates in story points on stories; see [CONTRIBUTING.md](CONTRIBUTING.md#issues-and-the-board).
 - **Workflow:** Product Backlog → Sprint Backlog → In progress → In review → Done.

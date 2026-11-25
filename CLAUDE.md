@@ -19,7 +19,8 @@ Adam (lead, PM), Laurel (backend, QA), Tom (UI/UX), Richard (backend). Coordinat
 - `product-vision.md`: Product Vision (Deliverable 2); PDFs of both in `deliverables/`
 - `research/`: desk research, online coding sheet, competitor research, interview notes P1 to P5 (anonymised)
 - `deliverable3-task.md`: current assignment, Sprint 1 (planning, task board, first increment, review, retro, report)
-- `sprints/sprint-1-plan.md`: Sprint Goal, Sprint Backlog (19 points), task breakdown and owners
+- `sprints/sprint-1-plan.md`: Sprint Goal, Sprint Backlog (19 points), task breakdown and owners; `sprint-1-review.md`, `sprint-1-retrospective.md`
+- `sprints/sprint-2-plan.md`: Sprint 2 plan (one week, 17 points), refinement of #7 to #12 and new stories
 - `sprints/meeting-log.md`: notes from every team meeting (attendees, decisions, next steps), newest first
 - `definition-of-done.md`: team Definition of Done, with a change log updated at retrospectives
 
@@ -51,7 +52,7 @@ gh project item-list 1 --owner adamvalik --limit 300 --format json
 
 Fields: Status, Sprint, Priority (P0/P1/P2), Estimate (1/2/3/5). Issue bodies use the template: "## User story", "## Acceptance criteria" (checkboxes), "## Dependencies".
 
-Sprints: 1 (2026-11-11 to 11-25), 2 (11-26 to 12-09), 3 (12-10 to 12-23). The team decides which stories go into a sprint; don't assign them without asking.
+Sprints: 1 (2026-11-11 to 11-25), 2 (11-26 to 12-02, one week), 3 (12-03 to 12-16). The team decides which stories go into a sprint; don't assign them without asking.
 
 ## Working rules
 
