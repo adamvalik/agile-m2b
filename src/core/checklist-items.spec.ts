@@ -61,12 +61,20 @@ const steps: ItemStep[] = [
   },
 ];
 
-function itemsFor(status: 'eu' | 'non-eu'): ChecklistItem[] {
-  return toChecklistItems(buildChecklist(steps, { status }), { arrivalDate: '2027-03-01' });
+function itemsFor(status: 'eu' | 'non-eu', done: string[] = []): ChecklistItem[] {
+  return toChecklistItems(
+    buildChecklist(steps, { status }),
+    { arrivalDate: '2027-03-01' },
+    new Set(done),
+  );
 }
 
 const summary = (items: ChecklistItem[]) =>
   items.map((item) => [item.step.id, item.state, stepNote(item)]);
+
+const itemFor = (items: ChecklistItem[], id: string) => items.find((item) => item.step.id === id)!;
+
+const ids = (list: readonly ItemStep[]) => list.map((step) => step.id);
 
 describe('toChecklistItems', () => {
   it('gives an EU student the tax code as the next step', () => {
@@ -104,6 +112,82 @@ describe('toChecklistItems', () => {
     const schengen = { ...steps[1], deadline: { workingDays: 8, countsFrom: 'schengen-entry' } };
     const [item] = toChecklistItems([schengen as ItemStep], { arrivalDate: '2027-03-01' });
     expect(item.dueDate).toBeNull();
+  });
+});
+
+describe('toChecklistItems with done marks', () => {
+  it('makes a waiting step available once the step it needs is done', () => {
+    expect(itemFor(itemsFor('eu'), 'transport-pass').state).toBe('waiting');
+
+    expect(summary(itemsFor('eu', ['tax-code']))).toEqual([
+      ['tax-code', 'done', 'Start from home.'],
+      [
+        'transport-pass',
+        'next',
+        'Start from home. May wait for: Italian SIM card (not confirmed yet).',
+      ],
+      [
+        'bank-account',
+        'optional',
+        'After you arrive. May wait for: Italian SIM card (not confirmed yet).',
+      ],
+      ['sim-card', 'optional', 'After you arrive.'],
+    ]);
+  });
+
+  it('keeps a step waiting until every step it needs is done', () => {
+    const before = itemFor(itemsFor('non-eu', ['tax-code']), 'bank-account');
+    expect(ids(before.waitsFor)).toEqual(['residence-permit']);
+    expect(stepNote(before)).toBe('Waits for: residence permit.');
+
+    const after = itemFor(itemsFor('non-eu', ['tax-code', 'residence-permit']), 'bank-account');
+    expect(after.waitsFor).toEqual([]);
+  });
+
+  it('gives the next step to the first required step that is not done', () => {
+    expect(summary(itemsFor('non-eu', ['residence-permit'])).slice(0, 3)).toEqual([
+      ['residence-permit', 'done', 'Within 8 working days after you arrive.'],
+      ['tax-code', 'next', 'Start from home.'],
+      ['transport-pass', 'waiting', 'Waits for: tax code.'],
+    ]);
+  });
+
+  it('gives no next step once every required step is done', () => {
+    const items = itemsFor('eu', ['tax-code', 'transport-pass']);
+    expect(items.filter((item) => item.state === 'next')).toEqual([]);
+  });
+
+  it('keeps unknown links as a note that never makes a step wait', () => {
+    const transport = itemFor(itemsFor('non-eu', ['tax-code']), 'transport-pass');
+    expect(transport.state).toBe('todo');
+    expect(transport.waitsFor).toEqual([]);
+    expect(ids(transport.mayWaitFor)).toEqual(['residence-permit', 'sim-card']);
+    expect(stepNote(transport)).toBe(
+      'Start from home. May wait for: residence permit, Italian SIM card (not confirmed yet).',
+    );
+
+    const taxCode = itemFor(itemsFor('non-eu'), 'tax-code');
+    expect(taxCode.state).toBe('todo');
+    expect(taxCode.waitsFor).toEqual([]);
+    expect(ids(taxCode.mayWaitFor)).toEqual(['residence-permit']);
+  });
+
+  it('drops an unknown link from the note once its step is done', () => {
+    const transport = itemFor(
+      itemsFor('non-eu', ['tax-code', 'residence-permit']),
+      'transport-pass',
+    );
+    expect(ids(transport.mayWaitFor)).toEqual(['sim-card']);
+  });
+
+  it('shows a step marked done as done, even when a step it needs is not', () => {
+    const items = itemsFor('eu', ['transport-pass']);
+    expect(itemFor(items, 'transport-pass')).toMatchObject({ state: 'done', waitsFor: [] });
+    expect(itemFor(items, 'tax-code').state).toBe('next');
+  });
+
+  it('ignores done marks for steps that are not on the checklist', () => {
+    expect(itemsFor('eu', ['residence-permit', 'no-such-step'])).toEqual(itemsFor('eu'));
   });
 });
 

@@ -4,12 +4,13 @@ import type { ChecklistStep } from './checklist';
 
 /**
  * How a step shows on the checklist (design/mobile/06-step-states.png):
- * - `next`: the one step to do now, the first required step that is not waiting
- * - `waiting`: a required step with a confirmed link to a step that is still to do
+ * - `next`: the one step to do now, the first required step that is neither done nor waiting
+ * - `waiting`: a required step with a confirmed link to a step that is not done yet
  * - `optional`: the step file says `"optional": true`
  * - `todo`: any other required step
+ * - `done`: the student marked the step as done (#13), whether it is required or optional
  */
-export type StepState = 'next' | 'waiting' | 'optional' | 'todo';
+export type StepState = 'next' | 'waiting' | 'optional' | 'todo' | 'done';
 
 /** The fields a checklist row needs, on top of what `buildChecklist` reads. */
 export type ItemStep = ChecklistStep & { readonly title: string; readonly startFromHome: boolean };
@@ -17,34 +18,41 @@ export type ItemStep = ChecklistStep & { readonly title: string; readonly startF
 export interface ChecklistItem<T extends ItemStep = ItemStep> {
   readonly step: T;
   readonly state: StepState;
-  /** Steps on this checklist that must be done first (confirmed links only). */
+  /** Steps on this checklist that must be done first and are not done yet (confirmed links only). */
   readonly waitsFor: readonly T[];
-  /** Steps on this checklist the step may wait for (unknown links), shown as a note only. */
+  /** Steps on this checklist, not done yet, the step may wait for (unknown links): a note only. */
   readonly mayWaitFor: readonly T[];
   /** The deadline as a date, when the step has one that counts from arrival. */
   readonly dueDate: Date | null;
 }
 
 /**
- * Gives each step of an ordered checklist (from `buildChecklist`) its state, the steps it waits
- * for and its due date. Steps cannot be marked as done yet, so every confirmed link to a step on
- * the checklist still makes a step wait.
+ * Gives each step of an ordered checklist (from `buildChecklist`) its state, the steps it still
+ * waits for and its due date.
+ *
+ * `done` holds the ids of the steps the student marked as done. A waiting step becomes available
+ * once every step it needs through a confirmed link is done. Unknown links never make a step wait:
+ * they stay a note until the linked step is done.
  */
 export function toChecklistItems<T extends ItemStep>(
   ordered: readonly T[],
   answers: Pick<Answers, 'arrivalDate'>,
+  done: ReadonlySet<string> = new Set(),
 ): ChecklistItem<T>[] {
   const byId = new Map(ordered.map((step) => [step.id, step]));
-  const linked = (step: T, status: 'confirmed' | 'unknown') =>
+  const notDone = (step: T, status: 'confirmed' | 'unknown') =>
     step.requires
-      .filter((link) => link.status === status)
+      .filter((link) => link.status === status && !done.has(link.step))
       .map((link) => byId.get(link.step))
       .filter((target): target is T => target !== undefined);
   const arrival = fromIsoDate(answers.arrivalDate);
 
   let nextGiven = false;
-  return ordered.map((step) => {
-    const waitsFor = linked(step, 'confirmed');
+  return ordered.map((step): ChecklistItem<T> => {
+    if (done.has(step.id)) {
+      return { step, state: 'done', waitsFor: [], mayWaitFor: [], dueDate: dueDate(step, arrival) };
+    }
+    const waitsFor = notDone(step, 'confirmed');
     let state: StepState;
     if (step.optional) {
       state = 'optional';
@@ -60,7 +68,7 @@ export function toChecklistItems<T extends ItemStep>(
       step,
       state,
       waitsFor,
-      mayWaitFor: linked(step, 'unknown'),
+      mayWaitFor: notDone(step, 'unknown'),
       dueDate: dueDate(step, arrival),
     };
   });
