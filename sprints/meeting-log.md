@@ -21,6 +21,29 @@ Template for a new entry:
 
 ---
 
+## 2026-11-25, Sprint 2 Planning (13:30–14:00)
+
+**Attended:** Adam, Laurel, Tom, Richard
+
+Full plan: [sprint-2-plan.md](sprint-2-plan.md)
+
+### Discussed and decided
+
+- **Timeline:** five weeks for three sprints, so Sprint 2 is one week (26 Nov to 2 Dec) and Sprint 3 runs 3 to 16 Dec. Development done on 1 Dec, user tests on 2 Dec, Review, Retrospective and report on 3 Dec.
+- **Refinement:** most of #7 to #12 was built with the checklist screen. #7, #9 and #10 close with the user tests (#14); #8 is done; #11 comes with #13; #12 is rewritten as a timeline. New story: steps and prices that fit the student's length of stay and optionally age.
+- **Sprint Goal:** "By 2 December, a student can mark steps as done and come back to a timeline that shows what to do now and what is due when, tailored to their status, arrival date, length of stay and (if they want) age, and we have watched at least 3 students in Bolzano use it."
+- **Selected stories:** #13 (3), #11 (1), #12 (3), stay and age (3), #20 (1), #14 (3), #7, #9, #10 (1 each). **17 story points planned.** If we fall behind, we drop #20 first, then the stay and age story.
+
+### Next steps
+
+| Who | What | Issue |
+| --- | --- | --- |
+| Adam | Create the new stories and tasks on the board, update the sprint dates and the DoD | |
+| everyone | Start the first task with a draft PR on 26 Nov | |
+| Laurel | Check the facts for stay and age; write the test script | #14 |
+
+---
+
 ## 2026-11-24, Sprint 1 Retrospective (13:00–13:30)
 
 **Attended:** Adam, Laurel, Tom, Richard
