@@ -136,6 +136,12 @@ describe('Checklist', () => {
     expect(titles(page)).toContain('Request your residence permit (permesso di soggiorno)');
   });
 
+  it('shows the privacy note with a way to clear the data', async () => {
+    const page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' });
+
+    expect(page.querySelector('app-clear-data')?.textContent).toContain('Clear my data');
+  });
+
   it('points to the intake when there are no answers', async () => {
     const page = await render(null);
 

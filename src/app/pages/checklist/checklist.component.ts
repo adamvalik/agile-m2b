@@ -8,6 +8,7 @@ import { loadAnswers } from '../../../core/answers';
 import { formatArrivalDate, formatDueDate, fromIsoDate } from '../../../core/arrival-date';
 import { buildChecklist } from '../../../core/checklist';
 import { type ChecklistItem, stepNote, toChecklistItems } from '../../../core/checklist-items';
+import { ClearData } from '../../clear-data/clear-data.component';
 import { STEPS } from '../../steps';
 
 /**
@@ -17,7 +18,7 @@ import { STEPS } from '../../steps';
  */
 @Component({
   selector: 'app-checklist',
-  imports: [RouterLink, NgIcon, HlmBadgeImports, HlmButtonImports],
+  imports: [RouterLink, NgIcon, ClearData, HlmBadgeImports, HlmButtonImports],
   providers: [provideIcons({ lucideCalendar, lucideCircle, lucideCircleDot, lucideClock })],
   templateUrl: './checklist.component.html',
 })
