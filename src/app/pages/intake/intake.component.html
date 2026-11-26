@@ -3,8 +3,10 @@
   Back
 </a>
 
-<h1 class="mt-6 text-2xl font-semibold tracking-tight sm:text-3xl">Two quick questions</h1>
-<p class="mt-1 text-sm text-muted-foreground">So we show only the steps that apply to you.</p>
+<h1 class="mt-6 text-2xl font-semibold tracking-tight sm:text-3xl">A few quick questions</h1>
+<p class="mt-1 text-sm text-muted-foreground">
+  So we show only the steps and prices that apply to you.
+</p>
 
 @if (showSummary()) {
   <div hlmAlert variant="destructive" class="mt-6" tabindex="-1" #summary>
@@ -66,6 +68,62 @@
       </p>
       <hlm-field-error>{{ firstError(intake.arrivalDate().errors()) }}</hlm-field-error>
     </div>
+
+    <fieldset hlmFieldSet>
+      <legend hlmFieldLegend class="text-base">How long do you stay?</legend>
+      <p hlmFieldDescription class="-mt-2">This changes which transport pass is worth it.</p>
+      <div hlmField>
+        <hlm-radio-group [formField]="intake.stay" class="gap-3">
+          <div class="flex items-center gap-3">
+            <hlm-radio value="semester" inputId="stay-semester">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="stay-semester" class="font-normal">One semester</label>
+          </div>
+          <div class="flex items-center gap-3">
+            <hlm-radio value="year" inputId="stay-year">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="stay-year" class="font-normal">A full year</label>
+          </div>
+        </hlm-radio-group>
+        <hlm-field-error>{{ firstError(intake.stay().errors()) }}</hlm-field-error>
+      </div>
+    </fieldset>
+
+    <fieldset hlmFieldSet>
+      <legend hlmFieldLegend class="text-base">
+        Are you under 26 when you arrive?
+        <span class="font-normal text-muted-foreground">(optional)</span>
+      </legend>
+      <p hlmFieldDescription class="-mt-2">
+        Some passes are cheaper under 26. We never ask for your birth date.
+      </p>
+      <div hlmField>
+        <hlm-radio-group [formField]="intake.under26" class="gap-3">
+          <div class="flex items-center gap-3">
+            <hlm-radio value="yes" inputId="under26-yes">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="under26-yes" class="font-normal">Yes, under 26</label>
+          </div>
+          <div class="flex items-center gap-3">
+            <hlm-radio value="no" inputId="under26-no">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="under26-no" class="font-normal">No, 26 or older</label>
+          </div>
+          <div class="flex items-center gap-3">
+            <hlm-radio value="prefer-not-to-say" inputId="under26-prefer-not-to-say">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="under26-prefer-not-to-say" class="font-normal">
+              Prefer not to say
+            </label>
+          </div>
+        </hlm-radio-group>
+      </div>
+    </fieldset>
   </div>
 
   <div class="mt-10 grid gap-4 sm:mt-0 sm:border-t sm:bg-muted/50 sm:p-4">

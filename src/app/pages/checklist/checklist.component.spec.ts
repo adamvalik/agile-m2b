@@ -75,7 +75,7 @@ describe('Checklist', () => {
   afterEach(() => localStorage.clear());
 
   it('shows the answers with a way to change them', async () => {
-    const page = await render({ status: 'non-eu', arrivalDate: '2027-03-01' });
+    const page = await render({ status: 'non-eu', arrivalDate: '2027-03-01', stay: 'semester' });
     const summary = page.querySelector('section')!;
 
     expect(summary.textContent).toContain('Non-EU citizen');
@@ -85,7 +85,7 @@ describe('Checklist', () => {
   });
 
   it('shows an EU student the steps without the residence permit, tax code first', async () => {
-    const page = await render({ status: 'eu', arrivalDate: '2027-03-01' });
+    const page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' });
 
     expect(titles(page)).toEqual([
       'Get your tax code (codice fiscale)',
@@ -96,7 +96,7 @@ describe('Checklist', () => {
   });
 
   it('shows a non-EU student the residence permit with its due date', async () => {
-    const page = await render({ status: 'non-eu', arrivalDate: '2027-03-01' });
+    const page = await render({ status: 'non-eu', arrivalDate: '2027-03-01', stay: 'semester' });
     const permit = rows(page)[0];
 
     expect(titles(page)[0]).toBe('Request your residence permit (permesso di soggiorno)');
@@ -107,7 +107,7 @@ describe('Checklist', () => {
   });
 
   it('marks exactly one step as next, and the steps that wait or are optional', async () => {
-    const page = await render({ status: 'eu', arrivalDate: '2027-03-01' });
+    const page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' });
     const badges = rows(page).map((row) =>
       [...row.querySelectorAll('[data-slot="badge"]')].map((b) => b.textContent?.trim()),
     );
@@ -117,7 +117,7 @@ describe('Checklist', () => {
   });
 
   it('opens the guide of each step', async () => {
-    const page = await render({ status: 'eu', arrivalDate: '2027-03-01' });
+    const page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' });
 
     expect(rows(page).map((row) => row.getAttribute('href'))).toEqual([
       '/steps/tax-code',
@@ -128,11 +128,11 @@ describe('Checklist', () => {
   });
 
   it('builds the list from the latest saved answers', async () => {
-    let page = await render({ status: 'eu', arrivalDate: '2027-03-01' });
+    let page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' });
     expect(titles(page)).not.toContain('Request your residence permit (permesso di soggiorno)');
 
     TestBed.resetTestingModule();
-    page = await render({ status: 'non-eu', arrivalDate: '2027-03-01' });
+    page = await render({ status: 'non-eu', arrivalDate: '2027-03-01', stay: 'semester' });
     expect(titles(page)).toContain('Request your residence permit (permesso di soggiorno)');
   });
 

@@ -3,6 +3,7 @@ import {
   type Answers,
   type AnswersStorage,
   loadAnswers,
+  loadSavedAnswers,
   saveAnswers,
 } from './answers';
 import { buildChecklist, type ChecklistStep } from './checklist';
@@ -15,7 +16,7 @@ function memoryStorage(initial: Record<string, string> = {}): AnswersStorage {
   };
 }
 
-const answers: Answers = { status: 'non-eu', arrivalDate: '2027-03-01' };
+const answers: Answers = { status: 'non-eu', arrivalDate: '2027-03-01', stay: 'semester' };
 
 function storageWith(saved: Answers): AnswersStorage {
   const storage = memoryStorage();
@@ -33,11 +34,27 @@ describe('saveAnswers and loadAnswers', () => {
   it('replace earlier answers when the student changes them', () => {
     const storage = memoryStorage();
     saveAnswers(answers, storage);
-    saveAnswers({ status: 'eu', arrivalDate: '2027-02-15' }, storage);
-    expect(loadAnswers(storage)).toEqual({ status: 'eu', arrivalDate: '2027-02-15' });
+    saveAnswers({ status: 'eu', arrivalDate: '2027-02-15', stay: 'year', under26: 'yes' }, storage);
+    expect(loadAnswers(storage)).toEqual({
+      status: 'eu',
+      arrivalDate: '2027-02-15',
+      stay: 'year',
+      under26: 'yes',
+    });
   });
 
-  it('store only the two answers', () => {
+  it('keep the optional age answer, including "Prefer not to say"', () => {
+    for (const under26 of ['yes', 'no', 'prefer-not-to-say'] as const) {
+      expect(loadAnswers(storageWith({ ...answers, under26 }))).toEqual({ ...answers, under26 });
+    }
+  });
+
+  it('leave out the age answer when the student skipped it', () => {
+    const storage = storageWith(answers);
+    expect(JSON.parse(storage.getItem(ANSWERS_STORAGE_KEY)!)).not.toHaveProperty('under26');
+  });
+
+  it('store only the intake answers', () => {
     const storage = memoryStorage();
     saveAnswers({ ...answers, name: 'Someone' } as Answers, storage);
     expect(JSON.parse(storage.getItem(ANSWERS_STORAGE_KEY)!)).toEqual(answers);
@@ -92,10 +109,36 @@ describe('loadAnswers', () => {
       '{"status":"martian","arrivalDate":"2027-03-01"}',
       '{"status":"eu","arrivalDate":"2027-02-30"}',
       '{"status":"eu"}',
+      '{"status":"eu","arrivalDate":"2027-03-01","stay":"forever"}',
       'null',
     ];
     for (const raw of broken) {
       expect(loadAnswers(memoryStorage({ [ANSWERS_STORAGE_KEY]: raw }))).toBeNull();
     }
+  });
+
+  it('returns null for answers saved before the stay question', () => {
+    const old = '{"status":"eu","arrivalDate":"2027-03-01"}';
+    expect(loadAnswers(memoryStorage({ [ANSWERS_STORAGE_KEY]: old }))).toBeNull();
+  });
+
+  it('drops an age answer it cannot use and keeps the rest', () => {
+    const raw = JSON.stringify({ ...answers, under26: 'maybe' });
+    expect(loadAnswers(memoryStorage({ [ANSWERS_STORAGE_KEY]: raw }))).toEqual(answers);
+  });
+});
+
+describe('loadSavedAnswers', () => {
+  it('returns the valid answers even when the stay is missing', () => {
+    const old = '{"status":"eu","arrivalDate":"2027-03-01","stay":"forever"}';
+    expect(loadSavedAnswers(memoryStorage({ [ANSWERS_STORAGE_KEY]: old }))).toEqual({
+      status: 'eu',
+      arrivalDate: '2027-03-01',
+    });
+  });
+
+  it('returns no answers when nothing usable is saved', () => {
+    expect(loadSavedAnswers(memoryStorage())).toEqual({});
+    expect(loadSavedAnswers(memoryStorage({ [ANSWERS_STORAGE_KEY]: 'not json' }))).toEqual({});
   });
 });
