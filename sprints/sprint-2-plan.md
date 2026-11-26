@@ -46,24 +46,23 @@ The checklist screen and guides (PR #73) already meet most criteria of these sto
 
 **Dependencies:** #13 (done steps leave the timeline's "now").
 
-### New story #76: see the steps and prices that fit my stay and age
+### New story #76: see the transport pass and prices that fit my stay and age
 
-The review asked for more personalisation. Length of stay changes which steps apply: the residence permit is only for stays longer than three months. Age mainly changes prices: the transport pass offers differ for students under 26.
+The review asked for more personalisation. Every exchange student stays at least one semester, so the useful question is one semester or a full year: it changes which transport pass is worth it, together with being under 26. The residence permit stays for every non-EU student. Whether full degree students need the app is a separate question for the Product Backlog (#98).
 
-**User story:** As an incoming student, I want to say how long I stay and, if I want, whether I am under 26, so that I see the steps that apply to me and the prices that are mine.
+**User story:** As an incoming student, I want to say whether I stay for one semester or a full year and, if I want, whether I am under 26, so that I see which transport pass and prices fit me.
 
 **Acceptance criteria:**
-- [ ] The intake asks whether the student stays longer than three months; the student can change the answer later
-- [ ] The residence permit appears only for non-EU students staying longer than three months
+- [ ] The intake asks whether the student stays for one semester or a full year; the student can change the answer later
 - [ ] The intake asks whether the student is under 26 on arrival, with "Prefer not to say" as an option; the answer is optional
-- [ ] Without an age answer, the transport pass guide shows the full table of passes and prices
-- [ ] With an age answer, the same table highlights the passes that fit the student
-- [ ] The facts behind each rule are checked against an official source and reviewed by a second team member
+- [ ] The transport pass guide shows the passes and prices as a table
+- [ ] The table highlights the passes that fit the student's stay and, if given, age; without an age answer it highlights by stay only
+- [ ] The facts behind the table are checked against an official source and reviewed by a second team member
 - [ ] The answers are stored only on the device, and the app asks for no birth date or exact dates of stay
 
 **Estimate:** 3. **Priority:** P0. **Dependencies:** #5, #6.
 
-> **Definition of Done, point 8,** allowed only EU or non-EU status and arrival date. Length of stay is a yes or no range and age is optional, so neither is personal data; the team agreed the change at Planning and it is in the [DoD change log](../definition-of-done.md#changes).
+> **Definition of Done, point 8,** allowed only EU or non-EU status and arrival date. Length of stay is one semester or a full year and age is optional, so neither is personal data; the team agreed the change at Planning and it is in the [DoD change log](../definition-of-done.md#changes).
 
 ## Sprint Goal
 
@@ -76,7 +75,7 @@ The review asked for more personalisation. Length of stay changes which steps ap
 | 1 | #13 Mark steps as done and keep my progress | P0 | 3 | #6 |
 | 2 | #11 See which steps are waiting on another step | P0 | 1 | #13 |
 | 3 | #12 See my first weeks as a timeline | P0 | 3 | #13 |
-| 4 | #76 See the steps and prices that fit my stay and age | P0 | 3 | #5, #6 |
+| 4 | #76 See the transport pass and prices that fit my stay and age | P0 | 3 | #5, #6 |
 | 5 | #20 Clear my data from this device | P1 | 1 | #13 |
 | 6 | #14 Test the app with students already in Bolzano | P0 | 3 | #13, #12 |
 | 7 | #7 Tax code guide | P0 | 1 | #14 |
@@ -129,15 +128,15 @@ Tasks become sub-issues of their story, labelled `task`, in Sprint 2.
 | Put each step in a phase from today, the arrival date and its deadline; days left and overdue (`src/core/`, with tests) | Laurel |
 | Show the checklist as a timeline with the arrival countdown | Tom, pairing with Adam |
 
-### #76 See the steps and prices that fit my stay and age (3 points)
+### #76 See the transport pass and prices that fit my stay and age (3 points)
 
 | Task | Owner |
 | --- | --- |
-| Check the facts: permit only for stays over three months, which passes and prices depend on age | Laurel |
+| Check the facts: which passes and prices fit one semester or a full year, and which depend on being under 26 | Laurel |
 | Cross-review the facts | Richard |
-| Add a stay condition to the step format, the content check and `buildChecklist` | Richard |
+| Add the passes as data to the step file and the content check, and pick the passes that fit the student (`src/core/`, with tests) | Richard |
 | Add the stay question and the optional age question to the intake and the saved answers | Adam |
-| Show the transport passes as a price table in the guide, highlighting the passes that fit when the age is known | Tom |
+| Show the transport passes as a price table in the guide, highlighting the passes that fit the stay and, if given, age | Tom |
 
 ### #20 Clear my data from this device (1 point)
 
@@ -174,4 +173,4 @@ This also closes #7, #9 and #10: each test includes following a guide without he
 | Stories land on the last day again | Development done on 1 December; dropping order agreed above |
 | The facts for stay or age are unclear | Mark them unknown and show the step or the full price table to everyone with a note, as in Sprint 1 |
 | Reviews over the weekend | Agree in the WhatsApp group who reviews which PR each day |
-| New intake questions conflict with "no personal data" | Stay is a yes or no range, age is optional; record the DoD change |
+| New intake questions conflict with "no personal data" | Stay is one semester or a full year, age is optional; recorded in the DoD |
