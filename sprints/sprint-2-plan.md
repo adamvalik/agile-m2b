@@ -46,7 +46,7 @@ The checklist screen and guides (PR #73) already meet most criteria of these sto
 
 **Dependencies:** #13 (done steps leave the timeline's "now").
 
-### New story: steps and prices that fit my stay and age
+### New story #76: see the steps and prices that fit my stay and age
 
 The review asked for more personalisation. Length of stay changes which steps apply: the residence permit is only for stays longer than three months. Age mainly changes prices: the transport pass offers differ for students under 26.
 
@@ -76,7 +76,7 @@ The review asked for more personalisation. Length of stay changes which steps ap
 | 1 | #13 Mark steps as done and keep my progress | P0 | 3 | #6 |
 | 2 | #11 See which steps are waiting on another step | P0 | 1 | #13 |
 | 3 | #12 See my first weeks as a timeline | P0 | 3 | #13 |
-| 4 | New: steps and prices that fit my stay and age | P0 | 3 | #5, #6 |
+| 4 | #76 See the steps and prices that fit my stay and age | P0 | 3 | #5, #6 |
 | 5 | #20 Clear my data from this device | P1 | 1 | #13 |
 | 6 | #14 Test the app with students already in Bolzano | P0 | 3 | #13, #12 |
 | 7 | #7 Tax code guide | P0 | 1 | #14 |
@@ -129,7 +129,7 @@ Tasks become sub-issues of their story, labelled `task`, in Sprint 2.
 | Put each step in a phase from today, the arrival date and its deadline; days left and overdue (`src/core/`, with tests) | Laurel |
 | Show the checklist as a timeline with the arrival countdown | Tom, pairing with Adam |
 
-### New: steps and prices that fit my stay and age (3 points)
+### #76 See the steps and prices that fit my stay and age (3 points)
 
 | Task | Owner |
 | --- | --- |
