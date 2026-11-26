@@ -16,7 +16,7 @@ A user story counts as **Done** only when every point below holds. A story that 
 5. The change is merged to `main` through a pull request reviewed and approved by at least one other team member (see [Merging without a review](#merging-without-a-review) for the exceptions).
 6. Automated checks pass (build, tests, and the step content check once #4 is in place).
 7. The change is live on the public URL and works at phone width and desktop width.
-8. The app asks for no account and no personal data beyond EU or non-EU status and arrival date; any saved progress stays on the device.
+8. The app asks for no account and no personal data. The intake asks only for EU or non-EU status, arrival date, whether the stay is longer than three months, and, optionally, whether the student is under 26; answers and saved progress stay on the device.
 9. The README is updated if setup, deployment or editing steps changed.
 
 ## Stories with content or research
@@ -42,3 +42,4 @@ In both cases the pull request says why it needs no review, and for an agreed de
 | --- | --- | --- |
 | 2026-11-11 | Initial version | Sprint 1 Planning |
 | 2026-11-24 | Added [Merging without a review](#merging-without-a-review): minor documentation changes and documents that record an agreed decision can be merged without a review | Sprint 1 Retrospective: a review was not needed for such changes, for example the stack decision agreed verbally (#59) |
+| 2026-11-25 | Point 8: the intake may also ask whether the stay is longer than three months and, optionally, whether the student is under 26 | Sprint 2 Planning: these answers change which steps apply and which transport pass prices fit; both are ranges, not personal data |

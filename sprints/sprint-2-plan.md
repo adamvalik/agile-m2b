@@ -63,7 +63,7 @@ The review asked for more personalisation. Length of stay changes which steps ap
 
 **Estimate:** 3. **Priority:** P0. **Dependencies:** #5, #6.
 
-> **Definition of Done, point 8,** allows only EU or non-EU status and arrival date. Length of stay is a yes or no range and age is optional, so neither is personal data, but the team must agree to the change at Planning and record it in the DoD change log.
+> **Definition of Done, point 8,** allowed only EU or non-EU status and arrival date. Length of stay is a yes or no range and age is optional, so neither is personal data; the team agreed the change at Planning and it is in the [DoD change log](../definition-of-done.md#changes).
 
 ## Sprint Goal
 
