@@ -59,10 +59,6 @@ function isComplete(answers: Partial<Answers>): answers is Answers {
   );
 }
 
-export function isAnswers(value: unknown): value is Answers {
-  return isComplete(pickAnswers(value));
-}
-
 /**
  * Reads whatever valid answers are saved, even when some required ones are missing, for
  * example answers saved before the stay question existed. The intake fills them in again.

@@ -79,9 +79,15 @@ describe('Checklist', () => {
     const summary = page.querySelector('section')!;
 
     expect(summary.textContent).toContain('Non-EU citizen');
-    expect(summary.textContent).toContain('Arriving Mon 1 March 2027');
+    expect(summary.textContent).toContain('Arriving Mon 1 March 2027, staying one semester');
     expect(summary.querySelector('a')?.getAttribute('href')).toBe('/intake');
     expect(summary.querySelector('a')?.textContent).toContain('Change');
+  });
+
+  it('shows a full-year stay in the answers', async () => {
+    const page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'year' });
+
+    expect(page.querySelector('section')?.textContent).toContain('staying a full year');
   });
 
   it('shows an EU student the steps without the residence permit, tax code first', async () => {

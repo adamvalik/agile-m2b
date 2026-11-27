@@ -32,6 +32,8 @@ export class Checklist {
     ? formatArrivalDate(fromIsoDate(this.answers.arrivalDate)!)
     : '';
 
+  protected readonly stay = this.answers?.stay === 'year' ? 'a full year' : 'one semester';
+
   protected readonly note = stepNote;
   protected readonly formatDueDate = formatDueDate;
 
