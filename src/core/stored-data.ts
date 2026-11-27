@@ -1,6 +1,6 @@
 /**
  * Every key the app writes to `localStorage` starts with this prefix: the answers
- * (`m2b.answers`) and, later, the progress (#53). Clearing by prefix removes them all and
+ * (`m2b.answers`) and the done marks (`m2b.progress`). Clearing by prefix removes them all and
  * leaves data of other sites or apps on the same origin alone.
  */
 export const STORAGE_PREFIX = 'm2b.';

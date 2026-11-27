@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { ANSWERS_STORAGE_KEY, saveAnswers } from '../../core/answers';
+import { PROGRESS_STORAGE_KEY, saveDone } from '../../core/progress';
 import { ClearData } from './clear-data.component';
 
 async function render() {
@@ -53,7 +54,7 @@ describe('ClearData', () => {
   });
 
   it('removes all app data and goes to the first page after confirming', async () => {
-    localStorage.setItem('m2b.progress', '{}');
+    saveDone(new Set(['tax-code']));
     const { click } = await render();
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl');
 
@@ -61,7 +62,7 @@ describe('ClearData', () => {
     await click('Yes, clear my data');
 
     expect(localStorage.getItem(ANSWERS_STORAGE_KEY)).toBeNull();
-    expect(localStorage.getItem('m2b.progress')).toBeNull();
+    expect(localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull();
     expect(navigate).toHaveBeenCalledWith('/');
   });
 });

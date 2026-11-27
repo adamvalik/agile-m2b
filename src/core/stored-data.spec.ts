@@ -1,17 +1,19 @@
 import { ANSWERS_STORAGE_KEY, loadAnswers, saveAnswers } from './answers';
+import { loadDone, PROGRESS_STORAGE_KEY, saveDone } from './progress';
 import { type ClearableStorage, clearStoredData } from './stored-data';
 
 describe('clearStoredData', () => {
   afterEach(() => localStorage.clear());
 
-  it('removes the answers and every other app key', () => {
+  it('removes the answers, the done marks and every other app key', () => {
     saveAnswers({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' });
-    localStorage.setItem('m2b.progress', '{"tax-code":true}');
+    saveDone(new Set(['tax-code']));
 
     expect(clearStoredData()).toBe(true);
     expect(localStorage.getItem(ANSWERS_STORAGE_KEY)).toBeNull();
-    expect(localStorage.getItem('m2b.progress')).toBeNull();
+    expect(localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull();
     expect(loadAnswers()).toBeNull();
+    expect(loadDone().size).toBe(0);
   });
 
   it('leaves keys of other apps alone', () => {
