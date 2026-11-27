@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { type Answers, saveAnswers } from '../../../core/answers';
 import type { Step } from '../../../core/step';
-import { saveDone } from '../../../core/progress';
+import { loadDone, saveDone } from '../../../core/progress';
 import { STEPS } from '../../steps';
 import { Checklist } from './checklist.component';
 
@@ -57,19 +57,25 @@ const steps: Step[] = [
   }),
 ];
 
-async function render(answers: Answers | null, done: string[] = []): Promise<HTMLElement> {
-  localStorage.clear();
-  if (answers) saveAnswers(answers);
-  saveDone(new Set(done));
+async function open(): Promise<ComponentFixture<Checklist>> {
   TestBed.configureTestingModule({
     providers: [provideRouter([]), { provide: STEPS, useValue: steps }],
   });
   const fixture = TestBed.createComponent(Checklist);
   await fixture.whenStable();
-  return fixture.nativeElement as HTMLElement;
+  return fixture;
+}
+
+async function render(answers: Answers | null, done: string[] = []): Promise<HTMLElement> {
+  localStorage.clear();
+  if (answers) saveAnswers(answers);
+  saveDone(new Set(done));
+  return (await open()).nativeElement as HTMLElement;
 }
 
 const rows = (page: HTMLElement) => [...page.querySelectorAll('ol > li a')] as HTMLAnchorElement[];
+const boxes = (page: HTMLElement) =>
+  [...page.querySelectorAll('ol > li [role="checkbox"]')] as HTMLButtonElement[];
 const titles = (page: HTMLElement) =>
   rows(page).map((row) => row.querySelector('span span')?.textContent?.trim());
 
@@ -178,6 +184,77 @@ describe('Checklist', () => {
 
       expect(progress(page).textContent).toContain('All 2 required steps done');
       expect(progress(page).textContent).not.toContain('Your next step');
+    });
+  });
+
+  describe('marking steps done', () => {
+    const eu: Answers = { status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' };
+    const count = (page: HTMLElement) => page.querySelector('#progress-count')?.textContent?.trim();
+
+    it('gives every row a checkbox named after its step', async () => {
+      const page = await render(eu);
+
+      expect(boxes(page).map((box) => box.getAttribute('aria-label'))).toEqual([
+        'Done: Get your tax code (codice fiscale)',
+        'Done: Get your transport pass',
+        'Done: Open an Italian bank account',
+        'Done: Get an Italian SIM card',
+      ]);
+      expect(boxes(page).every((box) => box.getAttribute('aria-checked') === 'false')).toBe(true);
+    });
+
+    it('marks a step done, updates the count and saves the mark on the device', async () => {
+      localStorage.clear();
+      saveAnswers(eu);
+      const fixture = await open();
+      const page = fixture.nativeElement as HTMLElement;
+
+      boxes(page)[0].click();
+      await fixture.whenStable();
+
+      expect(boxes(page)[0].getAttribute('aria-checked')).toBe('true');
+      expect(rows(page)[0].textContent).toContain('Done');
+      expect(rows(page)[0].textContent).not.toContain('Start from home.');
+      expect(count(page)).toBe('1 of 2 required steps done');
+      expect(
+        page.querySelector('section[aria-labelledby="progress-count"] a')?.getAttribute('href'),
+      ).toBe('/steps/transport-pass');
+      expect([...loadDone()]).toEqual(['tax-code']);
+    });
+
+    it('unmarks a step done', async () => {
+      localStorage.clear();
+      saveAnswers(eu);
+      saveDone(new Set(['tax-code']));
+      const fixture = await open();
+      const page = fixture.nativeElement as HTMLElement;
+      expect(count(page)).toBe('1 of 2 required steps done');
+
+      boxes(page)[0].click();
+      await fixture.whenStable();
+
+      expect(boxes(page)[0].getAttribute('aria-checked')).toBe('false');
+      expect(count(page)).toBe('0 of 2 required steps done');
+      expect([...loadDone()]).toEqual([]);
+    });
+
+    it('keeps the marks after a reload', async () => {
+      localStorage.clear();
+      saveAnswers(eu);
+      const page = (await open()).nativeElement as HTMLElement;
+      boxes(page)[0].click();
+
+      TestBed.resetTestingModule();
+      const reloaded = (await open()).nativeElement as HTMLElement;
+
+      expect(boxes(reloaded)[0].getAttribute('aria-checked')).toBe('true');
+      expect(count(reloaded)).toBe('1 of 2 required steps done');
+    });
+
+    it('keeps the checkbox outside the link, so marking a step does not open its guide', async () => {
+      const page = await render(eu);
+
+      expect(rows(page).some((row) => row.querySelector('[role="checkbox"]'))).toBe(false);
     });
   });
 });

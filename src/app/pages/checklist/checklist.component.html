@@ -45,28 +45,40 @@
 
   <ol class="mt-6 grid gap-3" aria-label="Steps in the order to do them">
     @for (item of items(); track item.step.id) {
-      <li>
+      @let done = item.state === 'done';
+      <li
+        class="flex items-center gap-2 rounded-xl border ps-3 transition-colors has-[a:hover]:bg-muted/50"
+        [class.border-2]="item.state === 'next'"
+        [class.border-primary]="item.state === 'next'"
+        [class.border-dashed]="item.state === 'optional'"
+      >
+        <!-- The padding gives the 16 px box a tap area of at least 24 px (WCAG 2.5.8). -->
+        <label class="flex shrink-0 cursor-pointer items-center p-1">
+          <hlm-checkbox
+            [checked]="done"
+            [aria-label]="'Done: ' + item.step.title"
+            (checkedChange)="marks.toggle(item.step.id)"
+          />
+        </label>
         <a
           [routerLink]="['/steps', item.step.id]"
-          class="flex flex-wrap items-center gap-3 rounded-xl border p-4 transition-colors hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
-          [class.border-2]="item.state === 'next'"
-          [class.border-primary]="item.state === 'next'"
-          [class.border-dashed]="item.state === 'optional'"
+          class="flex flex-1 flex-wrap items-center gap-3 rounded-e-xl py-4 ps-1 pe-4 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+          [class.py-3]="done"
         >
-          <ng-icon
-            [name]="icon(item)"
-            size="1.25rem"
-            aria-hidden="true"
-            class="shrink-0"
-            [class.text-amber-700]="item.dueDate && item.state !== 'next'"
-          />
           <!-- Badges sit beside the text and move below it when the row gets too narrow. -->
           <span class="min-w-40 flex-1">
-            <span class="block font-medium">{{ item.step.title }}</span>
-            <span class="mt-0.5 block text-sm text-muted-foreground">{{ note(item) }}</span>
+            <span class="block font-medium" [class.text-muted-foreground]="done">{{
+              item.step.title
+            }}</span>
+            @if (!done) {
+              <span class="mt-0.5 block text-sm text-muted-foreground">{{ note(item) }}</span>
+            }
           </span>
           <span class="ms-auto flex shrink-0 flex-col items-end gap-1.5">
             @switch (item.state) {
+              @case ('done') {
+                <span hlmBadge class="bg-green-700 text-white">Done</span>
+              }
               @case ('next') {
                 <span hlmBadge>Next</span>
               }
@@ -77,7 +89,7 @@
                 <span hlmBadge variant="outline">Optional</span>
               }
             }
-            @if (item.dueDate; as due) {
+            @if (!done && item.dueDate; as due) {
               <span hlmBadge class="bg-amber-700 text-white">Due {{ formatDueDate(due) }}</span>
             }
           </span>

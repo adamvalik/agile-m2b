@@ -41,6 +41,34 @@
     }
   </ul>
 
+  @if (done()) {
+    <div hlmAlert class="mt-6 has-data-[slot=alert-action]:pe-24">
+      <!-- The alert colours its icon with text-current, so the green needs the important flag. -->
+      <ng-icon name="lucideCircleCheck" aria-hidden="true" class="text-green-700!" />
+      <p hlmAlertTitle id="done-title">Done</p>
+      <p hlmAlertDescription id="done-note">Saved on this device only.</p>
+      <div hlmAlertAction>
+        <button
+          #undoButton
+          aria-describedby="done-title done-note"
+          hlmBtn
+          variant="outline"
+          size="sm"
+          type="button"
+          (click)="toggleDone()"
+        >
+          <ng-icon name="lucideUndo2" aria-hidden="true" />
+          Undo<span class="sr-only">: mark {{ step.title }} as not done</span>
+        </button>
+      </div>
+    </div>
+  } @else {
+    <button #markButton hlmBtn type="button" class="mt-6 w-full" (click)="toggleDone()">
+      <ng-icon name="lucideCheck" aria-hidden="true" />
+      Mark as done
+    </button>
+  }
+
   <section class="mt-8 border-t pt-6">
     <h2 class="text-lg font-semibold">What it is</h2>
     @for (paragraph of step.guide.whatItIs; track $index) {
