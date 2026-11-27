@@ -28,6 +28,9 @@ What it checks:
 | The file name is a valid step id | `content/steps/Tax_Code.json: file name "Tax_Code.json" is not a valid step id` |
 | Every step in `requires` has its own file, and is not the step itself | `content/steps/transport-pass.json: "requires[0].step" is "tax-cod", but there is no file content/steps/tax-cod.json` |
 | `requires` links do not form a loop | `content/steps: the "requires" links form a loop: residence-permit -> tax-code -> residence-permit` |
+| Each pass in `passes` has a name, price, period, age limit, the stays it fits and who can get it | `content/steps/transport-pass.json: missing required field "passes[0].ageLimit"` |
+| Pass names are not used twice | `content/steps/transport-pass.json: "passes[1].name" is "Flex Pass", which an earlier pass already uses` |
+| Every stay has at least one pass, so the price table always highlights something | `content/steps/transport-pass.json: "passes": no pass has "semester" in "fitsStay", so nothing would be highlighted for that stay` |
 
 An empty or missing `content/steps/` folder only prints a warning, so the build keeps working until the first step files arrive (#50). Files in `content/templates/` are not checked.
 

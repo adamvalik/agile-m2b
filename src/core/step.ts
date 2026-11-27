@@ -1,6 +1,8 @@
 // Types for one step of the checklist, matching content/step.schema.json (#43).
 // The step data itself is generated from content/steps/ at build time (#44).
 
+import type { Stay } from './answers';
+
 /** Who a step applies to. */
 export type Audience = 'eu' | 'non-eu';
 
@@ -34,6 +36,18 @@ export interface Guide {
   readonly whatComesNext: readonly string[];
 }
 
+export interface Pass {
+  readonly name: string;
+  readonly price: string;
+  /** How long the pass is valid. */
+  readonly period: string;
+  /** Only for people under this age when they order; null if the pass has no age rule. */
+  readonly ageLimit: number | null;
+  /** The stays the pass is worth it for. */
+  readonly fitsStay: readonly Stay[];
+  readonly whoCanGetIt: string;
+}
+
 export interface Step {
   /** The file name without .json, for example "tax-code". */
   readonly id: string;
@@ -48,4 +62,6 @@ export interface Step {
   /** Date the facts were last checked, as YYYY-MM-DD. */
   readonly lastChecked: string;
   readonly guide: Guide;
+  /** Only on the transport pass, in the order to show them. */
+  readonly passes?: readonly Pass[];
 }

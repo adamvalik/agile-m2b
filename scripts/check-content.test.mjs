@@ -229,3 +229,59 @@ test('ignores files that are not JSON', () => {
   const result = run({ 'tax-code.json': validStep(), 'notes.md': '# notes' });
   assert.deepEqual(result.errors, []);
 });
+
+function pass(overrides = {}) {
+  return {
+    name: 'Flex Pass',
+    price: '€22 a day at most',
+    period: 'No fixed period',
+    ageLimit: null,
+    fitsStay: ['semester', 'year'],
+    whoCanGetIt: 'Anyone who studies in South Tyrol.',
+    ...overrides,
+  };
+}
+
+test('a step with passes for every stay passes', () => {
+  const result = run({
+    'transport-pass.json': validStep({
+      passes: [
+        pass({ name: 'U26 Fix30 Pass', ageLimit: 26, fitsStay: ['semester'] }),
+        pass({ name: 'Fix365 Pass', fitsStay: ['year'] }),
+      ],
+    }),
+  });
+  assert.deepEqual(result.errors, []);
+});
+
+test('fails when passes is an empty list', () => {
+  const result = run({ 'transport-pass.json': validStep({ passes: [] }) });
+  assertError(result, '"passes" must have at least 1 item');
+});
+
+test('fails when a pass has no age limit', () => {
+  const result = run({
+    'transport-pass.json': validStep({ passes: [without(pass(), 'ageLimit')] }),
+  });
+  assertError(result, 'transport-pass.json', 'missing required field "passes[0].ageLimit"');
+});
+
+test('fails when a pass fits an unknown stay', () => {
+  const result = run({
+    'transport-pass.json': validStep({ passes: [pass({ fitsStay: ['month'] })] }),
+  });
+  assertError(result, '"passes[0].fitsStay[0]" must be one of: semester, year');
+});
+
+test('fails when two passes have the same name', () => {
+  const result = run({ 'transport-pass.json': validStep({ passes: [pass(), pass()] }) });
+  assertError(result, '"passes[1].name" is "Flex Pass", which an earlier pass already uses');
+});
+
+test('fails when no pass fits a stay', () => {
+  const result = run({
+    'transport-pass.json': validStep({ passes: [pass({ fitsStay: ['year'] })] }),
+  });
+  assertError(result, '"passes": no pass has "semester" in "fitsStay"');
+  assert.deepEqual(result.steps, {});
+});
