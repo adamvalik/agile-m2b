@@ -79,7 +79,7 @@
     {
       "name": "U26 Fix365 Pass",
       "price": "€153",
-      "period": "365 days from the day it is issued",
+      "period": "One year from the day it is issued",
       "ageLimit": 26,
       "fitsStay": ["year"],
       "whoCanGetIt": "Live in the EU or Switzerland, or in the Province of Bolzano. Italian tax code."

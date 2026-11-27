@@ -68,6 +68,8 @@ All prices are from the current pass pages, not from news announcements.
 | Flex Pass | Pay per km, up to €22 per day and €650 per year | EU or Swiss residents, or people who **work or study** in South Tyrol, with an Italian tax code | [6] |
 | Euregio Ticket Students | €377 per year (since 1 April 2026) | Under 28 when applying, enrolled at a university in the Euregio | [10] |
 
+- When the year starts (checked 2026-11-27): the Euregio Ticket Students is valid "for one year from the date of application". [10] The Fix365 pages give only "per year" and don't say when the year starts, so the app shows just "One year". [3][8][9]
+
 **Flex Pass rates per kilometre in a year** [6]
 
 | Kilometres | Price per km |
