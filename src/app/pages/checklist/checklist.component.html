@@ -7,7 +7,7 @@
   >
     <div>
       <p class="font-medium">{{ answers.status === 'eu' ? 'EU citizen' : 'Non-EU citizen' }}</p>
-      <p class="text-sm text-muted-foreground">Arriving {{ arrival }}</p>
+      <p class="text-sm text-muted-foreground">Arriving {{ arrival }}, staying {{ stay }}</p>
     </div>
     <a hlmBtn variant="outline" routerLink="/intake">
       Change<span class="sr-only"> your answers</span>
@@ -62,7 +62,7 @@
   </p>
 } @else {
   <p class="mt-3 text-muted-foreground">
-    Answer two quick questions first, so we can show the steps that apply to you.
+    Answer a few quick questions first, so we can show the steps that apply to you.
   </p>
   <a hlmBtn routerLink="/intake" class="mt-6">Answer the questions</a>
 }

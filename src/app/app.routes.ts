@@ -9,7 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'intake',
-    title: 'Two quick questions | First weeks in Bolzano',
+    title: 'A few quick questions | First weeks in Bolzano',
     loadComponent: () => import('./pages/intake/intake.component').then((m) => m.Intake),
   },
   {
