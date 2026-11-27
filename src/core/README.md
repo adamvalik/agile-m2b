@@ -12,5 +12,6 @@ Contents (Sprint 1):
 | Checklist builder | `buildChecklist(steps, answers)`: filters and orders steps for the student | #51 |
 | `checklist-items.ts` | `toChecklistItems()`: Next, Waiting, Optional, Done and to-do per step, what each step still waits for given the done marks, and its due date; `stepNote()` and `stepShortName()` for the checklist rows | #52, #81 |
 | `progress.ts` | `loadDone()`, `saveDone()` and `toggleDone()`: the ids of the steps marked done, in `localStorage` next to the answers | #78 |
+| `passes.ts` | `passFits()` and `fittingPasses()`: the transport passes that fit the student's stay and, if given, age, for the price table | #87 |
 
 Every module gets a `*.spec.ts` next to it. Tests run with `npm test` (Vitest).

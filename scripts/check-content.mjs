@@ -196,10 +196,6 @@ function checkDate(value, today) {
   return null;
 }
 
-/**
- * What the schema cannot check about the passes: every name only once, and at least one pass
- * for every stay, so the price table always highlights something.
- */
 function checkPasses(passes, stays) {
   const problems = [];
   const names = new Set();
