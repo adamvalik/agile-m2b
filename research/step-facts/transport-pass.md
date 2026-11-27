@@ -64,6 +64,7 @@ All prices are from the current pass pages, not from news announcements.
 | Pass | Price | Who can get it | Source |
 |---|---|---|---|
 | Fix365 Pass | €250 per year; monthly option from €39 | EU or Swiss residents, or people who work in South Tyrol, with an Italian tax code | [8] |
+| Fix30 Pass | €39 for 30 calendar days from the day it is issued; online only | People with a valid Italian tax code; no residence, work or age rule stated | [15] |
 | Flex Pass | Pay per km, up to €22 per day and €650 per year | EU or Swiss residents, or people who **work or study** in South Tyrol, with an Italian tax code | [6] |
 | Euregio Ticket Students | €377 per year (since 1 April 2026) | Under 28 when applying, enrolled at a university in the Euregio | [10] |
 
@@ -76,6 +77,8 @@ All prices are from the current pass pages, not from news announcements.
 | 2,001–10,000 | 3 cents |
 | 10,001–20,000 | 2 cents |
 | from 20,001 | free |
+
+The monthly option in the Fix365 row is the Fix30 Pass, a pass of its own with its own page. Unlike the Fix365, it asks only for a tax code, so it matters for non-EU students. If it is not renewed, it switches to the Flex tariff at no extra cost. [15]
 
 unibz recommends the Flex Pass to students over 26 if their annual transport costs do not exceed €250. [2]
 
@@ -159,3 +162,4 @@ Who to ask: südtirolmobil Service Desk, +39 0471 220 880. [3]
 12. südtirolmobil – Ticket finder, checked 2026-11-17: https://www.suedtirolmobil.info/en/tickets/ticket-finder
 13. Autonomous Province of Bolzano – Government resolution No. 356 of 27 May 2025, in force from 1 June 2025, checked 2026-11-14: https://www.suedtirolmobil.info/fileadmin/pdf/2025_News/Beschluss_der_Landesregierung_Nr._356_vom_27.05.2025.PDF (could not be rechecked on 2026-11-17: the file refused automated access)
 14. unibz – Exchange Students' Guide (file dated 2026-01-22), section "How to get around", checked 2026-11-17: https://www.unibz.it/assets/Documents/2026-01-22-International-Students-Guide-2025.pdf
+15. südtirolmobil – südtirolmobil Fix30 Pass, checked 2026-11-27: https://www.suedtirolmobil.info/en/tickets/ticket-finder/suedtirolmobil-fix30-pass
