@@ -28,6 +28,10 @@
       "url": "https://www.suedtirolmobil.info/en/tickets/ticket-finder/suedtirolmobil-fix365-pass"
     },
     {
+      "title": "südtirolmobil: Fix30 Pass",
+      "url": "https://www.suedtirolmobil.info/en/tickets/ticket-finder/suedtirolmobil-fix30-pass"
+    },
+    {
       "title": "südtirolmobil: Ticket offices",
       "url": "https://www.suedtirolmobil.info/en/tickets/where-to-buy-tickets/suedtirolmobil-ticket-offices"
     }
@@ -62,5 +66,55 @@
       "Carry the pass with your ID card or passport when you travel.",
       "If you do not renew it, the pass switches to the Flex tariff (pay per kilometre) at no extra cost."
     ]
-  }
+  },
+  "passes": [
+    {
+      "name": "U26 Fix30 Pass",
+      "price": "€21",
+      "period": "30 days from the day it is issued",
+      "ageLimit": 26,
+      "fitsStay": ["semester"],
+      "whoCanGetIt": "Live in the EU or Switzerland, or in the Province of Bolzano. Italian tax code."
+    },
+    {
+      "name": "U26 Fix365 Pass",
+      "price": "€153",
+      "period": "One year from the day it is issued",
+      "ageLimit": 26,
+      "fitsStay": ["year"],
+      "whoCanGetIt": "Live in the EU or Switzerland, or in the Province of Bolzano. Italian tax code."
+    },
+    {
+      "name": "Fix30 Pass",
+      "price": "€39",
+      "period": "30 days from the day it is issued",
+      "ageLimit": null,
+      "fitsStay": ["semester"],
+      "whoCanGetIt": "Anyone with an Italian tax code."
+    },
+    {
+      "name": "Fix365 Pass",
+      "price": "€250",
+      "period": "One year",
+      "ageLimit": null,
+      "fitsStay": ["year"],
+      "whoCanGetIt": "Live in the EU or Switzerland, or work in South Tyrol. Italian tax code."
+    },
+    {
+      "name": "Flex Pass",
+      "price": "Per kilometre, at most €22 a day and €650 a year",
+      "period": "No fixed period: you pay for what you travel",
+      "ageLimit": null,
+      "fitsStay": ["semester", "year"],
+      "whoCanGetIt": "Live in the EU or Switzerland, or work or study in South Tyrol. Italian tax code."
+    },
+    {
+      "name": "Euregio Ticket Students",
+      "price": "€377",
+      "period": "One year from the day you apply",
+      "ageLimit": 28,
+      "fitsStay": ["year"],
+      "whoCanGetIt": "Enrolled at a university in South Tyrol, Tyrol or Trentino. Also covers Tyrol and parts of Trentino."
+    }
+  ]
 }

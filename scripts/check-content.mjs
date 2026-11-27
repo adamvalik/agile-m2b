@@ -10,6 +10,7 @@
 // - lastChecked is a real date and not in the future
 // - every step in `requires` exists and is not the step itself
 // - `requires` has no cycles (a step cannot wait for itself through others)
+// - `passes` (#87): each name only once, and every stay has at least one pass
 //
 // checkContent() is exported so the step data build (#44) can reuse it.
 
@@ -43,6 +44,7 @@ export function checkContent({ contentDir = defaultContentDir(), today = new Dat
   }
   const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
   const validate = new Ajv({ allErrors: true }).compile(schema);
+  const stays = schema.definitions?.pass?.properties?.fitsStay?.items?.enum ?? [];
 
   if (!existsSync(stepsDir)) {
     warnings.push(`${shown(stepsDir)}: folder not found, so there are no step files to check`);
@@ -78,6 +80,8 @@ export function checkContent({ contentDir = defaultContentDir(), today = new Dat
 
     if (!validate(step)) {
       fileErrors.push(...describeSchemaErrors(validate.errors));
+    } else if (step.passes) {
+      fileErrors.push(...checkPasses(step.passes, stays));
     }
 
     if (typeof step?.lastChecked === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(step.lastChecked)) {
@@ -190,6 +194,27 @@ function checkDate(value, today) {
     return `is "${value}", which is in the future`;
   }
   return null;
+}
+
+function checkPasses(passes, stays) {
+  const problems = [];
+  const names = new Set();
+  passes.forEach((pass, index) => {
+    if (names.has(pass.name)) {
+      problems.push(
+        `"passes[${index}].name" is "${pass.name}", which an earlier pass already uses`,
+      );
+    }
+    names.add(pass.name);
+  });
+  for (const stay of stays) {
+    if (!passes.some((pass) => pass.fitsStay.includes(stay))) {
+      problems.push(
+        `"passes": no pass has "${stay}" in "fitsStay", so nothing would be highlighted for that stay`,
+      );
+    }
+  }
+  return problems;
 }
 
 function findCycle(steps) {

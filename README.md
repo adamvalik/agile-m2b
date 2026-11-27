@@ -94,6 +94,7 @@ Facts come first: check them against the official sources and note them in [`res
 | `sources` | Official pages, each with a title and an `https://` link; the first is shown as the main source |
 | `lastChecked` | Date the facts were last checked against the sources, as `YYYY-MM-DD` |
 | `guide` | What the student reads: `whatItIs`, `bring`, `fromHome` or `afterArrival`, `commonMistakes`, `whatComesNext`. Short items in plain English; in `bring`, add `"optional": true` to items only some students need |
+| `passes` | Only in `transport-pass.json`: the passes for the price table, in the order to show them. Each has a `name`, `price` and `period` as shown, an `ageLimit` (`26` for "under 26", `null` if none), the stays it is worth it for in `fitsStay` (`semester`, `year` or both) and `whoCanGetIt`. The app highlights the passes that fit the student's stay and, if given, age; every stay needs at least one pass |
 
 The full rules are in [`content/step.schema.json`](content/step.schema.json).
 
