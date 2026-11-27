@@ -21,7 +21,14 @@ import { HlmDatePickerImports, provideHlmDatePickerConfig } from '@spartan-ng/he
 import { HlmFieldImports } from '@spartan-ng/helm/field';
 import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { HlmRadioGroupImports } from '@spartan-ng/helm/radio-group';
-import { type Answers, loadAnswers, saveAnswers } from '../../../core/answers';
+import {
+  type Answers,
+  loadAnswers,
+  loadSavedAnswers,
+  saveAnswers,
+  type Stay,
+  type Under26,
+} from '../../../core/answers';
 import {
   checkArrivalDate,
   formatArrivalDate,
@@ -35,11 +42,15 @@ const thisYear = new Date().getFullYear();
 interface IntakeModel {
   status: Audience | '';
   arrivalDate: Date | null;
+  stay: Stay | '';
+  /** Optional: '' when the student skips the question. */
+  under26: Under26 | '';
 }
 
 export const INTAKE_MESSAGES = {
-  summary: 'Answer both questions to see your checklist.',
+  summary: 'Answer the required questions to see your checklist.',
   statusMissing: 'Choose EU or non-EU.',
+  stayMissing: 'Choose one semester or a full year.',
   dateMissing: 'Pick the day you arrive.',
   dateInvalid: 'This date does not exist. Check the day and month.',
 } as const;
@@ -99,17 +110,20 @@ export class Intake {
   protected readonly maxDate = new Date(thisYear + 2, 11, 31);
 
   private readonly router = inject(Router);
-  private readonly savedBefore = loadAnswers();
+  /**
+   * Back goes to the checklist when the student came to change their answers (#49). Answers
+   * saved before the stay question existed do not open the checklist, so Back goes home.
+   */
+  protected readonly backLink = loadAnswers() ? '/checklist' : '/';
 
-  /** Back goes to the checklist when the student came to change their answers (#49). */
-  protected readonly backLink = this.savedBefore ? '/checklist' : '/';
-
-  private readonly model = signal<IntakeModel>(initialModel(this.savedBefore));
+  /** Valid answers saved earlier are filled in, even when a required one is missing. */
+  private readonly model = signal<IntakeModel>(initialModel(loadSavedAnswers()));
 
   protected readonly intake = form(
     this.model,
     (path) => {
       required(path.status, { message: INTAKE_MESSAGES.statusMissing });
+      required(path.stay, { message: INTAKE_MESSAGES.stayMissing });
       validate(path.arrivalDate, ({ value }) => {
         const problem = checkArrivalDate(value());
         if (problem === 'missing') return { kind: 'missing', message: INTAKE_MESSAGES.dateMissing };
@@ -150,15 +164,19 @@ export class Intake {
   }
 }
 
-function initialModel(saved: Answers | null): IntakeModel {
+function initialModel(saved: Partial<Answers>): IntakeModel {
   return {
-    status: saved?.status ?? '',
-    arrivalDate: saved ? fromIsoDate(saved.arrivalDate) : null,
+    status: saved.status ?? '',
+    arrivalDate: saved.arrivalDate ? fromIsoDate(saved.arrivalDate) : null,
+    stay: saved.stay ?? '',
+    under26: saved.under26 ?? '',
   };
 }
 
 function toAnswers(model: IntakeModel): Answers | null {
-  const { status, arrivalDate } = model;
-  if (status === '' || checkArrivalDate(arrivalDate) !== null) return null;
-  return { status, arrivalDate: toIsoDate(arrivalDate!) };
+  const { status, arrivalDate, stay, under26 } = model;
+  if (status === '' || stay === '' || checkArrivalDate(arrivalDate) !== null) return null;
+  const answers: Answers = { status, arrivalDate: toIsoDate(arrivalDate!), stay };
+  if (under26 !== '') answers.under26 = under26;
+  return answers;
 }

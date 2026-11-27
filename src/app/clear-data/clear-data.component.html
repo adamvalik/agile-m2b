@@ -1,0 +1,42 @@
+<section aria-label="Your data" class="text-sm text-muted-foreground">
+  <p>
+    Your answers and progress are saved only in this browser on this device. Nothing is sent to a
+    server.
+    @if (!confirming()) {
+      <button
+        #openButton
+        hlmBtn
+        variant="link"
+        type="button"
+        class="h-auto p-0 text-sm text-muted-foreground underline hover:text-foreground"
+        (click)="ask()"
+      >
+        Clear my data
+      </button>
+    }
+  </p>
+
+  @if (confirming()) {
+    <div
+      role="group"
+      aria-labelledby="confirm-heading"
+      class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2"
+    >
+      <p id="confirm-heading" #confirmHeading tabindex="-1" class="text-foreground outline-none">
+        Remove your answers and progress from this device? This cannot be undone.
+      </p>
+      <div class="flex gap-2">
+        <button hlmBtn size="sm" variant="destructive" type="button" (click)="clear()">
+          Yes, clear my data
+        </button>
+        <button hlmBtn size="sm" variant="ghost" type="button" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+    @if (failed()) {
+      <p role="alert" class="mt-2 text-destructive">
+        Your browser did not allow us to remove the data. Try clearing this site's data in the
+        browser settings.
+      </p>
+    }
+  }
+</section>

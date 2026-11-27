@@ -102,7 +102,7 @@ describe('Guide', () => {
   });
 
   it('shows the due date when the student has an arrival date', async () => {
-    saveAnswers({ status: 'non-eu', arrivalDate: '2027-03-01' });
+    saveAnswers({ status: 'non-eu', arrivalDate: '2027-03-01', stay: 'semester' });
     const page = await render('residence-permit');
 
     expect(page.textContent).toContain('Due Wed 10 March');
