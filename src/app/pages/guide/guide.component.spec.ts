@@ -125,10 +125,18 @@ describe('Guide', () => {
   });
 
   describe('marking the step done', () => {
+    // The page is attached to the document so focus can move; detach it even when a test fails.
+    let attached: HTMLElement | undefined;
+    afterEach(() => {
+      attached?.remove();
+      attached = undefined;
+    });
+
     it('marks the step done, saves it and moves focus to Undo', async () => {
       const fixture = await open('tax-code');
       const page = fixture.nativeElement as HTMLElement;
       document.body.append(page);
+      attached = page;
 
       buttonNamed(page, 'Mark as done')!.click();
       await fixture.whenStable();
@@ -137,7 +145,6 @@ describe('Guide', () => {
       expect(page.textContent).toContain('Saved on this device only.');
       expect([...loadDone()]).toEqual(['tax-code']);
       expect(document.activeElement).toBe(buttonNamed(page, 'Undo'));
-      page.remove();
     });
 
     it('shows a step marked earlier as done, and undoes the mark', async () => {
@@ -145,6 +152,7 @@ describe('Guide', () => {
       const fixture = await open('tax-code');
       const page = fixture.nativeElement as HTMLElement;
       document.body.append(page);
+      attached = page;
       expect(page.textContent).toContain('Done');
 
       buttonNamed(page, 'Undo')!.click();
@@ -153,7 +161,21 @@ describe('Guide', () => {
       expect(page.textContent).not.toContain('Saved on this device only.');
       expect([...loadDone()]).toEqual(['transport-pass']);
       expect(document.activeElement).toBe(buttonNamed(page, 'Mark as done'));
-      page.remove();
     });
+  });
+
+  it('says so when the mark could not be saved', async () => {
+    const fixture = await open('tax-code');
+    const page = fixture.nativeElement as HTMLElement;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+
+    buttonNamed(page, 'Mark as done')!.click();
+    await fixture.whenStable();
+    vi.restoreAllMocks();
+
+    expect(page.textContent).toContain('Not saved');
+    expect(page.textContent).not.toContain('Saved on this device only.');
   });
 });

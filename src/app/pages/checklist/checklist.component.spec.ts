@@ -191,16 +191,39 @@ describe('Checklist', () => {
     const eu: Answers = { status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' };
     const count = (page: HTMLElement) => page.querySelector('#progress-count')?.textContent?.trim();
 
-    it('gives every row a checkbox named after its step', async () => {
+    it('gives every row a checkbox named after its own step', async () => {
       const page = await render(eu);
+      const names = boxes(page).map((box) => {
+        const labels = (box.getAttribute('aria-labelledby') ?? '').split(' ');
+        return labels
+          .map((id) => page.querySelector(`[id="${id}"]`)?.textContent?.trim())
+          .join(' ');
+      });
 
-      expect(boxes(page).map((box) => box.getAttribute('aria-label'))).toEqual([
+      expect(names).toEqual([
         'Done: Get your tax code (codice fiscale)',
         'Done: Get your transport pass',
         'Done: Open an Italian bank account',
         'Done: Get an Italian SIM card',
       ]);
       expect(boxes(page).every((box) => box.getAttribute('aria-checked') === 'false')).toBe(true);
+    });
+
+    it('picks up marks made in another tab before the next change', async () => {
+      localStorage.clear();
+      saveAnswers(eu);
+      const fixture = await open();
+      const page = fixture.nativeElement as HTMLElement;
+
+      // Another tab marks the tax code done.
+      saveDone(new Set(['tax-code']));
+      window.dispatchEvent(new StorageEvent('storage', { key: 'm2b.progress' }));
+      await fixture.whenStable();
+      expect(boxes(page)[0].getAttribute('aria-checked')).toBe('true');
+
+      boxes(page)[1].click();
+      await fixture.whenStable();
+      expect([...loadDone()].sort()).toEqual(['tax-code', 'transport-pass']);
     });
 
     it('marks a step done, updates the count and saves the mark on the device', async () => {

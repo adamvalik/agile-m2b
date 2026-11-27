@@ -59,6 +59,7 @@ export class Guide {
   private readonly injector = inject(Injector);
 
   protected readonly done = computed(() => this.marks.ids().has(this.id()));
+  protected readonly saved = this.marks.saved;
 
   private readonly markButton = viewChild<ElementRef<HTMLElement>>('markButton');
   private readonly undoButton = viewChild<ElementRef<HTMLElement>>('undoButton');

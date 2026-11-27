@@ -43,10 +43,21 @@
 
   @if (done()) {
     <div hlmAlert class="mt-6 has-data-[slot=alert-action]:pe-24">
-      <!-- The alert colours its icon with text-current, so the green needs the important flag. -->
-      <ng-icon name="lucideCircleCheck" aria-hidden="true" class="text-green-700!" />
+      <!-- The alert colours its icon with text-current, so the green needs the important flag. A
+        class with "text-" also skips the alert's icon size, so the size is set here too. -->
+      <ng-icon
+        name="lucideCircleCheck"
+        aria-hidden="true"
+        class="text-[length:--spacing(4)] text-green-700!"
+      />
       <p hlmAlertTitle id="done-title">Done</p>
-      <p hlmAlertDescription id="done-note">Saved on this device only.</p>
+      <p hlmAlertDescription id="done-note">
+        @if (saved()) {
+          Saved on this device only.
+        } @else {
+          Not saved: this browser does not allow it, so the mark is gone when you reload.
+        }
+      </p>
       <div hlmAlertAction>
         <button
           #undoButton
