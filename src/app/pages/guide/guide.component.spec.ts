@@ -1,7 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { saveAnswers } from '../../../core/answers';
+import { loadDone, saveDone } from '../../../core/progress';
 import type { Step } from '../../../core/step';
 import { STEPS } from '../../steps';
 import { Guide } from './guide.component';
@@ -46,7 +47,7 @@ const residencePermit: Step = {
   guide: { ...taxCode.guide, fromHome: undefined },
 };
 
-async function render(id: string): Promise<HTMLElement> {
+async function open(id: string): Promise<ComponentFixture<Guide>> {
   TestBed.configureTestingModule({
     providers: [
       provideRouter([]),
@@ -56,8 +57,15 @@ async function render(id: string): Promise<HTMLElement> {
   const fixture = TestBed.createComponent(Guide);
   fixture.componentRef.setInput('id', id);
   await fixture.whenStable();
-  return fixture.nativeElement as HTMLElement;
+  return fixture;
 }
+
+async function render(id: string): Promise<HTMLElement> {
+  return (await open(id)).nativeElement as HTMLElement;
+}
+
+const buttonNamed = (page: HTMLElement, text: string) =>
+  [...page.querySelectorAll('button')].find((b) => b.textContent?.includes(text));
 
 const headings = (page: HTMLElement) =>
   [...page.querySelectorAll('h2')].map((h) => h.textContent?.trim());
@@ -114,5 +122,60 @@ describe('Guide', () => {
 
     expect(page.querySelector('h1')?.textContent).toContain('Step not found');
     expect(page.querySelector('a[href="/checklist"]')).not.toBeNull();
+  });
+
+  describe('marking the step done', () => {
+    // The page is attached to the document so focus can move; detach it even when a test fails.
+    let attached: HTMLElement | undefined;
+    afterEach(() => {
+      attached?.remove();
+      attached = undefined;
+    });
+
+    it('marks the step done, saves it and moves focus to Undo', async () => {
+      const fixture = await open('tax-code');
+      const page = fixture.nativeElement as HTMLElement;
+      document.body.append(page);
+      attached = page;
+
+      buttonNamed(page, 'Mark as done')!.click();
+      await fixture.whenStable();
+
+      expect(buttonNamed(page, 'Mark as done')).toBeUndefined();
+      expect(page.textContent).toContain('Saved on this device only.');
+      expect([...loadDone()]).toEqual(['tax-code']);
+      expect(document.activeElement).toBe(buttonNamed(page, 'Undo'));
+    });
+
+    it('shows a step marked earlier as done, and undoes the mark', async () => {
+      saveDone(new Set(['tax-code', 'transport-pass']));
+      const fixture = await open('tax-code');
+      const page = fixture.nativeElement as HTMLElement;
+      document.body.append(page);
+      attached = page;
+      expect(page.textContent).toContain('Done');
+
+      buttonNamed(page, 'Undo')!.click();
+      await fixture.whenStable();
+
+      expect(page.textContent).not.toContain('Saved on this device only.');
+      expect([...loadDone()]).toEqual(['transport-pass']);
+      expect(document.activeElement).toBe(buttonNamed(page, 'Mark as done'));
+    });
+  });
+
+  it('says so when the mark could not be saved', async () => {
+    const fixture = await open('tax-code');
+    const page = fixture.nativeElement as HTMLElement;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+
+    buttonNamed(page, 'Mark as done')!.click();
+    await fixture.whenStable();
+    vi.restoreAllMocks();
+
+    expect(page.textContent).toContain('Not saved');
+    expect(page.textContent).not.toContain('Saved on this device only.');
   });
 });

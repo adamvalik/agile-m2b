@@ -2,6 +2,7 @@ import { toIsoDate } from './arrival-date';
 import { buildChecklist } from './checklist';
 import {
   type ChecklistItem,
+  checklistProgress,
   type ItemStep,
   stepNote,
   stepShortName,
@@ -188,6 +189,42 @@ describe('toChecklistItems with done marks', () => {
 
   it('ignores done marks for steps that are not on the checklist', () => {
     expect(itemsFor('eu', ['residence-permit', 'no-such-step'])).toEqual(itemsFor('eu'));
+  });
+});
+
+describe('checklistProgress', () => {
+  const count = (items: ChecklistItem[]) => {
+    const { done, total, next } = checklistProgress(items);
+    return { done, total, next: next?.step.id ?? null };
+  };
+
+  it('counts only required steps and names the next one', () => {
+    expect(count(itemsFor('non-eu'))).toEqual({ done: 0, total: 3, next: 'residence-permit' });
+  });
+
+  it('updates the count and the next step when a step is marked or unmarked', () => {
+    expect(count(itemsFor('non-eu', ['residence-permit']))).toEqual({
+      done: 1,
+      total: 3,
+      next: 'tax-code',
+    });
+    expect(count(itemsFor('non-eu', ['residence-permit', 'tax-code']))).toEqual({
+      done: 2,
+      total: 3,
+      next: 'transport-pass',
+    });
+  });
+
+  it('leaves done optional steps out of the count', () => {
+    expect(count(itemsFor('eu', ['sim-card']))).toEqual({ done: 0, total: 2, next: 'tax-code' });
+  });
+
+  it('gives no next step once every required step is done', () => {
+    expect(count(itemsFor('eu', ['tax-code', 'transport-pass']))).toEqual({
+      done: 2,
+      total: 2,
+      next: null,
+    });
   });
 });
 

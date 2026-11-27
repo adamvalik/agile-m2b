@@ -121,3 +121,27 @@ export function stepsNeeding<T extends ChecklistStep>(steps: readonly T[], id: s
     step.requires.some((link) => link.step === id && link.status === 'confirmed'),
   );
 }
+
+/** The summary at the top of the checklist: required steps done out of all required steps. */
+export interface ChecklistProgress<T extends ItemStep = ItemStep> {
+  readonly done: number;
+  readonly total: number;
+  /** The step to do now, or null when no required step can be done yet or all are done. */
+  readonly next: ChecklistItem<T> | null;
+}
+
+/**
+ * Counts the required steps that are done and finds the next step, from the items that
+ * `toChecklistItems` gives. Optional steps are left out of the count, so a student can finish
+ * the checklist without them.
+ */
+export function checklistProgress<T extends ItemStep>(
+  items: readonly ChecklistItem<T>[],
+): ChecklistProgress<T> {
+  const required = items.filter((item) => !item.step.optional);
+  return {
+    done: required.filter((item) => item.state === 'done').length,
+    total: required.length,
+    next: items.find((item) => item.state === 'next') ?? null,
+  };
+}

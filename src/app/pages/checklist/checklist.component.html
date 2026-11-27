@@ -14,30 +14,74 @@
     </a>
   </section>
 
+  @if (progress(); as progress) {
+    <section aria-labelledby="progress-count" class="mt-6 rounded-xl border p-4">
+      <p id="progress-count" class="text-sm text-muted-foreground" aria-live="polite">
+        @if (progress.total > 0 && progress.done === progress.total) {
+          All {{ progress.total }} required steps done
+        } @else {
+          {{ progress.done }} of {{ progress.total }} required steps done
+        }
+      </p>
+      <div class="mt-2 h-1 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+        <div
+          class="h-full rounded-full bg-primary transition-[width]"
+          [style.width.%]="progress.total ? (progress.done / progress.total) * 100 : 0"
+        ></div>
+      </div>
+      @if (progress.next; as next) {
+        <div class="mt-4 border-t pt-4">
+          <h2 class="text-sm text-muted-foreground">Your next step</h2>
+          <p class="mt-1 text-lg font-semibold">{{ next.step.title }}</p>
+          <p class="mt-1 text-sm text-muted-foreground">{{ note(next) }}</p>
+          <a hlmBtn size="sm" class="mt-3" [routerLink]="['/steps', next.step.id]">
+            Open guide<span class="sr-only">: {{ next.step.title }}</span>
+            <ng-icon name="lucideArrowRight" aria-hidden="true" />
+          </a>
+        </div>
+      }
+    </section>
+  }
+
   <ol class="mt-6 grid gap-3" aria-label="Steps in the order to do them">
-    @for (item of items; track item.step.id) {
-      <li>
+    @for (item of items(); track item.step.id) {
+      @let done = item.state === 'done';
+      <li
+        class="flex items-center gap-2 rounded-xl border ps-3 transition-colors has-[a:hover]:bg-muted/50"
+        [class.border-2]="item.state === 'next'"
+        [class.border-primary]="item.state === 'next'"
+        [class.border-dashed]="item.state === 'optional'"
+      >
+        <!-- The padding gives the 16 px box a tap area of at least 24 px (WCAG 2.5.8). -->
+        <!-- The checkbox takes its name from this label (spartan links them through inputId). -->
+        <label class="flex shrink-0 cursor-pointer items-center p-1">
+          <hlm-checkbox
+            [inputId]="'done-' + item.step.id"
+            [checked]="done"
+            (checkedChange)="marks.toggle(item.step.id)"
+          />
+          <span class="sr-only">Done: {{ item.step.title }}</span>
+        </label>
         <a
           [routerLink]="['/steps', item.step.id]"
-          class="flex flex-wrap items-center gap-3 rounded-xl border p-4 transition-colors hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
-          [class.border-2]="item.state === 'next'"
-          [class.border-primary]="item.state === 'next'"
-          [class.border-dashed]="item.state === 'optional'"
+          class="flex flex-1 flex-wrap items-center gap-3 rounded-e-xl ps-1 pe-4 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+          [class.py-3]="done"
+          [class.py-4]="!done"
         >
-          <ng-icon
-            [name]="icon(item)"
-            size="1.25rem"
-            aria-hidden="true"
-            class="shrink-0"
-            [class.text-amber-700]="item.dueDate && item.state !== 'next'"
-          />
           <!-- Badges sit beside the text and move below it when the row gets too narrow. -->
           <span class="min-w-40 flex-1">
-            <span class="block font-medium">{{ item.step.title }}</span>
-            <span class="mt-0.5 block text-sm text-muted-foreground">{{ note(item) }}</span>
+            <span class="block font-medium" [class.text-muted-foreground]="done">{{
+              item.step.title
+            }}</span>
+            @if (!done) {
+              <span class="mt-0.5 block text-sm text-muted-foreground">{{ note(item) }}</span>
+            }
           </span>
           <span class="ms-auto flex shrink-0 flex-col items-end gap-1.5">
             @switch (item.state) {
+              @case ('done') {
+                <span hlmBadge class="bg-green-700 text-white">Done</span>
+              }
               @case ('next') {
                 <span hlmBadge>Next</span>
               }
@@ -48,7 +92,7 @@
                 <span hlmBadge variant="outline">Optional</span>
               }
             }
-            @if (item.dueDate; as due) {
+            @if (!done && item.dueDate; as due) {
               <span hlmBadge class="bg-amber-700 text-white">Due {{ formatDueDate(due) }}</span>
             }
           </span>
