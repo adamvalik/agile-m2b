@@ -9,8 +9,9 @@ Checked facts behind each official step in the checklist (#2). Each file records
 | `transport-pass` | [transport-pass.md](transport-pass.md) | EU, non-EU | #39 | Richard | Laurel (#58) |
 | `sim-card` | [sim-card.md](sim-card.md) | EU, non-EU (optional) | #40 | Richard | Laurel (#58) |
 | `bank-account` | [bank-account.md](bank-account.md) | EU, non-EU (optional) | #40 | Richard | Laurel (#58) |
+| stay and age rules | [stay-and-age.md](stay-and-age.md) | which steps and passes fit the length of stay and age | #85 | Laurel | _pending (Richard, #86)_ |
 
-All five files were last checked on 2026-11-17.
+The five step files were last checked on 2026-11-17; `stay-and-age.md` on 2026-11-26.
 
 ## Dependencies between steps
 
