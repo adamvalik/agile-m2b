@@ -14,8 +14,37 @@
     </a>
   </section>
 
+  @if (progress(); as progress) {
+    <section aria-labelledby="progress-count" class="mt-6 rounded-xl border p-4">
+      <p id="progress-count" class="text-sm text-muted-foreground" aria-live="polite">
+        @if (progress.total > 0 && progress.done === progress.total) {
+          All {{ progress.total }} required steps done
+        } @else {
+          {{ progress.done }} of {{ progress.total }} required steps done
+        }
+      </p>
+      <div class="mt-2 h-1 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+        <div
+          class="h-full rounded-full bg-primary transition-[width]"
+          [style.width.%]="progress.total ? (progress.done / progress.total) * 100 : 0"
+        ></div>
+      </div>
+      @if (progress.next; as next) {
+        <div class="mt-4 border-t pt-4">
+          <h2 class="text-sm text-muted-foreground">Your next step</h2>
+          <p class="mt-1 text-lg font-semibold">{{ next.step.title }}</p>
+          <p class="mt-1 text-sm text-muted-foreground">{{ note(next) }}</p>
+          <a hlmBtn size="sm" class="mt-3" [routerLink]="['/steps', next.step.id]">
+            Open guide<span class="sr-only">: {{ next.step.title }}</span>
+            <ng-icon name="lucideArrowRight" aria-hidden="true" />
+          </a>
+        </div>
+      }
+    </section>
+  }
+
   <ol class="mt-6 grid gap-3" aria-label="Steps in the order to do them">
-    @for (item of items; track item.step.id) {
+    @for (item of items(); track item.step.id) {
       <li>
         <a
           [routerLink]="['/steps', item.step.id]"

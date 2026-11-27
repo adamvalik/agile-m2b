@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { type Answers, saveAnswers } from '../../../core/answers';
 import type { Step } from '../../../core/step';
+import { saveDone } from '../../../core/progress';
 import { STEPS } from '../../steps';
 import { Checklist } from './checklist.component';
 
@@ -56,9 +57,10 @@ const steps: Step[] = [
   }),
 ];
 
-async function render(answers: Answers | null): Promise<HTMLElement> {
+async function render(answers: Answers | null, done: string[] = []): Promise<HTMLElement> {
   localStorage.clear();
   if (answers) saveAnswers(answers);
+  saveDone(new Set(done));
   TestBed.configureTestingModule({
     providers: [provideRouter([]), { provide: STEPS, useValue: steps }],
   });
@@ -147,5 +149,35 @@ describe('Checklist', () => {
 
     expect(rows(page)).toHaveLength(0);
     expect(page.querySelector('a[href="/intake"]')?.textContent).toContain('Answer the questions');
+  });
+
+  describe('progress summary', () => {
+    const progress = (page: HTMLElement) =>
+      page.querySelector('section[aria-labelledby="progress-count"]') as HTMLElement;
+
+    it('counts the required steps done and names the next step with a link to its guide', async () => {
+      const page = await render({ status: 'non-eu', arrivalDate: '2027-03-01', stay: 'semester' }, [
+        'residence-permit',
+        'sim-card',
+      ]);
+      const summary = progress(page);
+
+      expect(summary.querySelector('#progress-count')?.textContent?.trim()).toBe(
+        '1 of 3 required steps done',
+      );
+      expect(summary.textContent).toContain('Your next step');
+      expect(summary.textContent).toContain('Get your tax code (codice fiscale)');
+      expect(summary.querySelector('a')?.getAttribute('href')).toBe('/steps/tax-code');
+    });
+
+    it('names no next step once every required step is done', async () => {
+      const page = await render({ status: 'eu', arrivalDate: '2027-03-01', stay: 'semester' }, [
+        'tax-code',
+        'transport-pass',
+      ]);
+
+      expect(progress(page).textContent).toContain('All 2 required steps done');
+      expect(progress(page).textContent).not.toContain('Your next step');
+    });
   });
 });
